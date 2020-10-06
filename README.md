@@ -1,2 +1,2 @@
 # jinglesxmas
-Jingels Xmas Trees web app
+Jingels Xmas Trees web app by Softbytes
