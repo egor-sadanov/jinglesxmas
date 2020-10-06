@@ -10,6 +10,7 @@ Core of the app is based on Stripe Demo withh added social login.
 
 # While reading original instrucrtions from Stripe Demo consider changes made for Jingels app:
 🔧 | **Inventory and setup**. We updated inventory with Jingles products and temp changed listProducts function to return static list of products. This needs to be reviewed and eventually lsit of product should come from index page selection
+
 🔧 | **Checkout page**. We changed index page and checkout moved checkout.html
 
 
