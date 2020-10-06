@@ -3,6 +3,16 @@
 This app is based on Stripe Payments for Demo and features social login with Facebook.
 Readme file contains original sections from source repositories:
 
+1. Stripe Payment Demo
+2. Facebook socila login
+
+Core of the app is based on Stripe Demo withh added social login.
+
+# While reading original instrucrtions from Stripe Demo consider changes made for Jingels app:
+🔧 | **Inventory and setup**. We updated inventory with Jingles products and temp changed listProducts function to return static list of products. This needs to be reviewed and eventually lsit of product should come from index page selection
+🔧 | **Checkout page**. We changed index page and checkout moved checkout.html
+
+
 ## Stripe Payments for Demo
 
 This demo features a sample e-commerce store that uses [Stripe Elements](https://stripe.com/docs/elements), [PaymentIntents](https://stripe.com/docs/payments/payment-intents) for [dynamic authentication](https://stripe.com/docs/payments/3d-secure), and the [Sources API](https://stripe.com/docs/sources) to illustrate how to accept both card payments and additional payment methods on the web.
