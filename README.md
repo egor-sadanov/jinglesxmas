@@ -1,17 +1,17 @@
 # Stripe Payments for Jingles
 
-This app is based on Stripe Payments for Demo and features social login with Facebook.
+This app is based on Stripe Payments Demo and features social login with Facebook.
 Readme file contains original sections from source repositories:
 
 **you can see the dev version running on ngrok.** [Ngrok](https://3d2b85548246.ngrok.io)
 
 
 1. Stripe Payment Demo
-2. Facebook socila login
+2. Facebook social login
 
 Core of the app is based on Stripe Demo withh added social login.
 
-# While reading original instrucrtions from Stripe Demo consider changes made for Jingels app:
+# While reading original instructions from Stripe Demo consider changes made for Jingles app:
 🔧 | **Inventory and setup**. We updated inventory with Jingles products and temp changed listProducts function to return static list of products. This needs to be reviewed and eventually lsit of product should come from index page selection
 
 🔧 | **Checkout page**. We changed index page and checkout moved checkout.html
