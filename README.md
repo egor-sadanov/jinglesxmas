@@ -3,7 +3,7 @@
 This app is based on Stripe Payments for Demo and features social login with Facebook.
 Readme file contains original sections from source repositories:
 
-Stripe Payments for Demo
+## Stripe Payments for Demo
 
 This demo features a sample e-commerce store that uses [Stripe Elements](https://stripe.com/docs/elements), [PaymentIntents](https://stripe.com/docs/payments/payment-intents) for [dynamic authentication](https://stripe.com/docs/payments/3d-secure), and the [Sources API](https://stripe.com/docs/sources) to illustrate how to accept both card payments and additional payment methods on the web.
 
