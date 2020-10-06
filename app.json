@@ -31,6 +31,22 @@
       "description":
         "Your webhook secret to verify signatures. Find it here in your Dashboard: https://dashboard.stripe.com/account/webhooks",
       "required": false
+    },
+    "FB_CLIENT_ID":{
+      "description":    
+      "Facebook app client ID for social authentication",
+      "required" : false
+    },
+    "FB_CLIENT_SECRET":{
+      "description":    
+      "Facebook app client secret",
+      "required" : false
+    },
+    "FB_CALLBACK_URL":{
+      "description":    
+      "Facebook app client callback URL",
+      "required" : false
     }
+    
   }
 }
