@@ -3,7 +3,7 @@
 This app is based on Stripe Payments for Demo and features social login with Facebook.
 Readme file contains original sections from source repositories:
 
-**you can see the dev version running on ngrok.** [Ngrok](https://67056f6f8f62.ngrok.io)
+**you can see the dev version running on ngrok.** [Ngrok](https://3d2b85548246.ngrok.io)
 
 
 1. Stripe Payment Demo
