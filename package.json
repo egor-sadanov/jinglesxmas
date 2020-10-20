@@ -1,14 +1,10 @@
 {
   "name": "stripe-payments-demo",
-  "description": "Sample store accepting universal payments on the web with Stripe Elements, Payment Request, Apple Pay, Google Pay, Microsoft Pay, and more.",
+  "description": "Jingles Trees",
   "version": "0.0.1",
   "private": true,
-  "author": "Romain Huet",
+  "author": "Alex Chenko",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/stripe/stripe-payments-demo.git"
-  },
   "engines": {
     "node": ">=10.0.0"
   },
@@ -17,20 +13,37 @@
     "setup-products": "node server/node/setup.js",
     "setup-cli": "stripe login --project-name=stripe-payments-demo",
     "webhook": "stripe listen --project-name=stripe-payments-demo --forward-to http://localhost:8000/webhook",
-    "start": "node server/node/server.js"
+    "start": "node server/node/server.js",
+    "start-react": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "body-parser": "^1.17.1",
-    "dotenv": "^4.0.0",
-    "ejs": "^2.5.7",
-    "express": "^4.15.2",
-    "stripe": "^6.28.0",
+    "classnames": "^2.2.6",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
+    "emotion": "^10.0.14",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "express": "^4.15.2",
     "express-session": "^1.17.0",
     "js-cookie": "^2.2.1",
     "passport": "^0.4.1",
-    "passport-facebook": "^3.0.0"
+    "passport-facebook": "^3.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1",
+    "react-spring": "^8.0.18",
+    "react-test-renderer": "^16.8.6",
+    "redux-thunk": "^2.3.0",
+    "stripe": "^6.28.0"
   },
   "devDependencies": {
     "@types/faker": "^4.1.5",
@@ -40,6 +53,27 @@
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.6.2",
     "@babel/register": "^7.6.2",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "prettier": "1.19.1",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.4",
+    "redux-mock-store": "^1.5.3"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
