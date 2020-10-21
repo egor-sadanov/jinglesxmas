@@ -64,10 +64,11 @@ export const boxWpap = css`
   text-align: center;
   border: 1px solid green;
   background-color: ${PALE_GREEN};
+  margin: 1em auto 0;
 
   @media (min-width: 768px) {
     width: 500px;
-    margin: 1em auto;
+    margin: 1em auto 0;
   }
   
 `

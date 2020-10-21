@@ -22,6 +22,7 @@ class TreesForm extends React.Component {
     }
     this.selectTree = this.selectTree.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   selectTree(tree) {
@@ -82,6 +83,19 @@ class TreesForm extends React.Component {
     }
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    console.log("submit");
+
+    fetch('https://your-node-server-here.com/api/submit-cart', {
+        method: 'POST',
+        body: JSON.stringify({tree: this.state.selectedTree.name})
+      }).then(function(response) {
+        console.log(response)
+        return response.json();
+      });
+}
+
   render() {
     const { trees, total, checkedItemsSet, disabledItemsSet } = this.state
 
@@ -105,7 +119,11 @@ class TreesForm extends React.Component {
     
 
     return (
-      <div className={styles.boxWpap}>
+      <form 
+        className={styles.boxWpap} 
+        method="post"     
+        onSubmit={this.onSubmit}
+      >
         <h2 className={styles.h2}>Order now</h2>
         <hr className={styles.hr}/>
         <div className={styles.tilesWpap}>
@@ -118,7 +136,7 @@ class TreesForm extends React.Component {
         <button className={styles.cta}>
             {`Buy for $${total}`}
         </button>
-      </div>
+      </form>
     )
   }
 }

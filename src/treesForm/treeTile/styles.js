@@ -26,7 +26,8 @@ export const treeTile = css`
 `
 
 export const activeClass = css`
-  background-color: #fcc;
+  // background-color: #fcc;
+  border: 1px solid ${RED};
 `
 
 export const bigTree = css`
