@@ -20,22 +20,8 @@ export const pageWpap = css`
   background-repeat: no-repeat;
   background-size: 100%;
 
-  @media (min-width: 768px) {
+  @media (min-width: 600px) {
    background-image: url("./images/bg.png"); 
-  }
-`
-
-export const subTextRed = css`
-  color: ${RED};
-  width: 100%;
-  margin: 0 auto 8em;
-
-  @media (min-width: 768px) {
-    width: 50vw;
-    font-size: 1.7vw;
-    line-height: 2vw;
-    margin: 0 auto 26vw;
-    // margin: 0 auto 15em;
   }
 `
 
@@ -44,10 +30,9 @@ export const specialOffer = css`
   background-color: ${RED};
   width: 90%;
   margin: 1vw auto 0;
-  padding: 0.4em;
-  padding-left: 2.6em;
+  padding: 0.4em 0.4em 0.4em 4em;
   font-size: 0.8em;
-  line-height: 1em;
+  line-height: 1.2em;
   border: 1px solid #fff;
   position: relative;
 
@@ -56,27 +41,50 @@ export const specialOffer = css`
     background-image: url("./images/bells.png"); 
     background-repeat: no-repeat;
     position: absolute;
-    background-size: 100px;
+    background-size: 110px;
     top:-20px;
     left: -40px;
-    height: 120px;
-    width: 100px;
+    height: 130px;
+    width: 110px;
 
     @media (min-width: 768px) {
       background-image: url("./images/bells_desktop.png"); 
-      background-size: 200px;
-      top:-30px;
-      left: -140px;
-      height: 240px;
-      width: 200px;
+      background-size: 15vw; //200px;
+      top:-2.4vw;
+      left: -10vw;
+      height: 18vw; 
+      width: 15vw; 
     }
+  }
+
+  @media (min-width: 500px) {
+    width: 28em;
+    padding: 0.5em 0.5em 0.5em 3em;
   }
 
   @media (min-width: 768px) {
     width: 24em;
-    font-size: 1em;
-    line-height: 1.2em;
-    padding: 0.4em;
+    font-size: 1.6vw;
+    line-height: 2vw;
+    padding: 0.5em 0.5em 0.5em 2.2em;
+  }
+`
+
+export const subTextRed = css`
+  color: ${RED};
+  width: 100%;
+  margin: 0 auto 10em;
+  font-size: 0.9em;
+
+  @media (min-width: 500px) {
+    width: 28em;
+  }
+
+  @media (min-width: 768px) {
+    width: 50vw;
+    font-size: 1.7vw;
+    line-height: 2vw;
+    margin: 0 auto 26vw;
   }
 `
 
@@ -84,17 +92,24 @@ export const subTextGreen = css`
   color: ${DARK_GREEN};
   width: 100%;
   margin: 0 auto;
+  font-size: 0.9em;
 
-  @media (min-width: 768px) {
-    width: 28em;
+  @media (min-width: 500px) {
+    width: 32em;
   }
 `
 
 export const h1 = css`
   color: ${RED};
-  font-size: 2.4em;
+  font-size: 2.2em;
   margin-bottom: 0;
   font-family: 'Fondamento', cursive;
+  overflow: visible;
+  white-space: nowrap;
+
+  @media (min-width: 400px) {
+    font-size: 2.8em;
+  }
 
   @media (min-width: 500px) {
     font-size: 4em;
