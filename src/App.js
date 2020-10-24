@@ -20,6 +20,9 @@ const PrimaryLayout = () => (
     </div>
     <TreesForm></TreesForm>
     <div className={styles.car}></div>
+    <div className={styles.subTextGreen}>
+      Delivery starts in December with options for weekends. You can select suitable dates on Checkout page. Additional area surcharge may apply for remote suburbs and CBD.
+    </div>
   </div>
 )
 

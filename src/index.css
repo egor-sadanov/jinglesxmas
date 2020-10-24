@@ -147,14 +147,17 @@ a[href^="mailto:"] {
 	color: #ffffff;
   font-weight: 400;
 	vertical-align: middle;
-	margin: 0;
+  margin: 0;
+  max-width: 160px;
 }
 
 .footer-distributed .footer-center p span{
 	display: block;
 	font-weight: normal;
 	font-size: 14px;
-	line-height: 2;
+  line-height: 2;
+  overflow: visible;
+  white-space: nowrap;
 }
 
 /* Footer Right */
@@ -225,7 +228,6 @@ a[href^="mailto:"] {
 
 @media (min-width: 1600px) {
   .footer-distributed{
-    width: 60%;
-    margin: 0 auto;
+    padding: 20px 20vw;
 	}
 }

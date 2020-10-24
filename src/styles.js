@@ -86,7 +86,7 @@ export const subTextRed = css`
 export const subTextGreen = css`
   color: ${DARK_GREEN};
   width: 100%;
-  margin: 0 auto;
+  margin: 1em auto 0;
   font-size: 0.9em;
 
   @media (min-width: 500px) {
@@ -120,5 +120,6 @@ export const car = css`
   background-repeat: no-repeat;
   height: 240px;
   width: 300px;
-  margin: 0 auto -6px;
+  margin: -4em auto -6px;
+  z-index: -100;
 `
