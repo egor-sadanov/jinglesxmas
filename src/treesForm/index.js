@@ -30,7 +30,6 @@ class TreesForm extends React.Component {
       const trees = state.trees.map(item => {
         return {...item, selected: item.name === tree.name}
       })
-      // debugger
       return {
         ...state, 
         trees: trees, 
@@ -56,7 +55,7 @@ class TreesForm extends React.Component {
 
     const item = ADDITIONAL_ITEMS.find(i => i.name === itemName)
 
-    if (!isChecked){
+    if (!isChecked) {
       checkedItemsSet.delete(item)
     } else {
       checkedItemsSet.add(item)
@@ -104,8 +103,8 @@ class TreesForm extends React.Component {
     ))
 
     const checkboxes = ADDITIONAL_ITEMS.map(item => (
-        <div>
-          <label key={item.key} className={styles.checkboxLabel}>
+        <div key={item.key}>
+          <label className={styles.checkboxLabel}>
             <Checkbox 
               name={item.name} 
               checked={checkedItemsSet.has(item)} 

@@ -105,6 +105,12 @@ h3 {
 	color:  inherit;
 }
 
+a[href^="tel:"],
+a[href^="mailto:"] {
+  text-decoration: none;
+  font-weight: 400;
+}
+
 .footer-distributed .footer-company-name{
 	font-size: 14px;
 	font-weight: normal;
@@ -139,34 +145,16 @@ h3 {
 .footer-distributed .footer-center p{
 	display: inline-block;
 	color: #ffffff;
-  font-weight:400;
+  font-weight: 400;
 	vertical-align: middle;
-	margin:0;
+	margin: 0;
 }
 
 .footer-distributed .footer-center p span{
-	display:block;
+	display: block;
 	font-weight: normal;
-	font-size:14px;
-	line-height:2;
-}
-
-.footer-distributed .footer-center p a{
-	color:  lightseagreen;
-	text-decoration: none;;
-}
-
-.footer-distributed .footer-links a:before {
-  content: "|";
-  font-weight:300;
-  font-size: 20px;
-  left: 0;
-  display: inline-block;
-  padding-right: 5px;
-}
-
-.footer-distributed .footer-links .link-1:before {
-  content: none;
+	font-size: 14px;
+	line-height: 2;
 }
 
 /* Footer Right */
@@ -185,8 +173,11 @@ h3 {
 .footer-distributed .footer-company-about span{
 	display: block;
 	font-size: 14px;
-	font-weight: bold;
 	margin-bottom: 20px;
+}
+
+.footer-distributed .footer-company-about-header{
+	font-weight: 600;
 }
 
 .footer-distributed .footer-icons{
@@ -230,4 +221,11 @@ h3 {
     margin-right: 6px;
 	}
 
+}
+
+@media (min-width: 1600px) {
+  .footer-distributed{
+    width: 60%;
+    margin: 0 auto;
+	}
 }

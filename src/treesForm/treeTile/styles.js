@@ -1,8 +1,5 @@
 import { css } from 'emotion'
-
-const RED = '#ff1212';
-const PALE_GREEN = '#f4f5eb';
-const CTA = '#6e9366';
+import { RED, CTA } from '../../colorConsts'
 
 export const treeTile = css`
   width: 46%;

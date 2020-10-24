@@ -1,10 +1,5 @@
 import { css } from 'emotion'
-
-const RED = '#ff1212'
-const PALE_GREEN = '#f4f5eb'
-const DARK_GREEN = '#2b4432'
-const CTA = '#6e9366'
-const YELLOW = '#ffffa5'
+import { RED, DARK_GREEN, YELLOW } from './colorConsts'
 
 export const pageWpap = css`
   &&& {
@@ -125,5 +120,5 @@ export const car = css`
   background-repeat: no-repeat;
   height: 240px;
   width: 300px;
-  margin: 0 auto;
+  margin: 0 auto -6px;
 `

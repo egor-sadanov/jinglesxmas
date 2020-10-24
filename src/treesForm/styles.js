@@ -1,11 +1,5 @@
 import { css } from 'emotion'
-
-const RED = '#ff1212'
-const PALE_GREEN = '#f4f5eb'
-const DARK_GREEN = '#2b4432'
-const CTA = '#6e9366'
-const YELLOW = '#ffffa5'
-
+import { RED, PALE_GREEN, CTA } from '../colorConsts'
 
 export const tilesWpap = css`
   padding: 8px 0;
