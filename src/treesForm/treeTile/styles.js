@@ -3,7 +3,7 @@ import { RED, CTA } from '../../colorConsts'
 
 export const treeTile = css`
   width: 46%;
-  background-color: #fff;
+  background-color: #fdecd3;
   padding: .5em 0 .5em 2.6em;
   box-sizing: border-box;
   border-radius: 6px;
@@ -20,7 +20,7 @@ export const treeTile = css`
   @media (min-width: 768px) {
     width: 300px;
     margin: 1em;
-    background-size: 2.6em;
+    background-size: 3.1em;
   }
 `
 
@@ -32,13 +32,13 @@ export const bigTree = css`
   background-size: 3.6em;
 
   @media (min-width: 768px) {
-    background-size: 3em;
+    background-size: 3.6em;
   }
 `
 
 export const title = css`
   color: ${RED};
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: 500;
 `
 

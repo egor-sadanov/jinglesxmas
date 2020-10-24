@@ -24,7 +24,7 @@ export const specialOffer = css`
   color: ${YELLOW};
   background-color: ${RED};
   width: 90%;
-  margin: 1vw auto 0;
+  margin: 2vw auto 0;
   padding: 0.4em 0.4em 0.4em 4em;
   font-size: 0.8em;
   line-height: 1.2em;
@@ -68,7 +68,7 @@ export const specialOffer = css`
 export const subTextRed = css`
   color: ${RED};
   width: 100%;
-  margin: 0 auto 10em;
+  margin: 0 auto 11em;
   font-size: 0.9em;
 
   @media (min-width: 500px) {
@@ -118,8 +118,7 @@ export const h1 = css`
 export const car = css`
   background-image: url("./images/truck_new.png"); 
   background-repeat: no-repeat;
-  height: 240px;
+  height: 179px;
   width: 300px;
-  margin: -4em auto -6px;
-  z-index: -100;
+  margin: 0 auto;
 `

@@ -15,7 +15,7 @@ export const tilesWpap = css`
 export const checkboxesWpap = css`
   margin: 0 auto 1em;
   text-align: left;
-  width: 10em;
+  width: 11em;
 
   @media (min-width: 420px) {
     width: 9em;
@@ -26,10 +26,12 @@ export const checkboxLabel = css`
   color: ${RED};
   overflow: visible;
   white-space: nowrap;
+  font-size: 1.2em;
+  line-height: 1.8em;
 
   span {
     color: #666;
-    font-size: 0.8em;
+    // font-size: 0.8em;
   }
 
   @media (min-width: 768px) {
@@ -60,7 +62,6 @@ export const boxWpap = css`
   border: 1px solid green;
   background-color: ${PALE_GREEN};
   margin: 1em auto 0;
-  z-index: 10;
 
   @media (min-width: 768px) {
     width: 500px;
@@ -73,7 +74,6 @@ export const cta = css`
   margin: 0.4em auto 0;
   background-color: ${CTA};
   font-size: 1em;
-  z-index: 10000;
 
   :active, :hover, :visited, :focus{
     background-color: ${CTA};
