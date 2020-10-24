@@ -15,5 +15,4 @@ fetch("footerdata.json")
         replaceText('footer-phone', phone);
         replaceText('footer-email', email);
         replaceText('footer-address', address);
-
     }) 
