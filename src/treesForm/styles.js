@@ -31,12 +31,8 @@ export const checkboxLabel = css`
 
   span {
     color: #666;
-    // font-size: 0.8em;
   }
 
-  @media (min-width: 768px) {
-    
-  }
 `
 
 export const hr = css`

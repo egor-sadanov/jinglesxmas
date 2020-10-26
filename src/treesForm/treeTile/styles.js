@@ -9,7 +9,7 @@ export const treeTile = css`
   border-radius: 6px;
   box-shadow: 2px 2px 2px #ddd;
   text-align: center;
-  font-size: 0.8em;
+  font-size: 0.6em;
   margin: 0.5em;
 
   background-image: url("./images/tree_card.png"); 
@@ -17,10 +17,13 @@ export const treeTile = css`
   background-size: 3.1em;
   background-position: left 1em bottom .8em;
 
+  @media (min-width: 375px) {
+    font-size: 0.8em;
+  }
+
   @media (min-width: 768px) {
     width: 300px;
     margin: 1em;
-    background-size: 3.1em;
   }
 `
 
@@ -30,16 +33,22 @@ export const activeClass = css`
 
 export const bigTree = css`
   background-size: 3.6em;
-
-  @media (min-width: 768px) {
-    background-size: 3.6em;
-  }
 `
 
 export const title = css`
   color: ${RED};
-  font-size: 1.5em;
   font-weight: 500;
+
+  font-size: 16px;
+
+  @media (min-width: 375px) {
+    font-size: 18px;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 1.5em;
+  }
+
 `
 
 export const hr = css`
@@ -47,5 +56,13 @@ export const hr = css`
   height: 0;
   border-top: 1px solid ${CTA};
   border-bottom: 1px solid ${CTA};
-  margin: 0 3em;
+  margin: 0 20px;
+
+  @media (min-width: 375px) {
+    margin: 0 40px;
+  }
+
+  @media (min-width: 768px) {
+    margin: 0 4em;
+  }
 `

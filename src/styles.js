@@ -97,9 +97,9 @@ export const subTextGreen = css`
 export const h1 = css`
   color: ${RED};
   font-size: 2.2em;
-  margin-bottom: 0;
   font-family: 'Fondamento', cursive;
-  overflow: visible;
+  margin: 2vw auto 0;
+  overflow: hiddlen;
   white-space: nowrap;
 
   @media (min-width: 400px) {

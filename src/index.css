@@ -32,12 +32,14 @@ body {
 }
 
 
-h1 {
-  font-size: 32px;
+h1.loading {
+  font-size: 80px;
   line-height: 1.4em;
-  margin: 24px 0;
+  margin: 0 auto 400px;
+  text-align: center;
   font-weight: 500;
-  color: #253c64;
+  color:red;
+  font-family: 'Fondamento', cursive;
 }
 
 h2 {
