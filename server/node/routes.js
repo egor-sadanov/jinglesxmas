@@ -14,13 +14,23 @@ const config = require('./config');
 const {products} = require('./inventory');
 const express = require('express');
 const router = express.Router();
+const qs = require('qs');
 const stripe = require('stripe')(config.stripe.secretKey);
 stripe.setApiVersion(config.stripe.apiVersion);
 
 // Render the main app HTML.
 router.get('/', (req, res) => {
-  res.render('index.html');
+  res.render('index');
 });
+
+router.get('/checkout', (req, res) => {
+  res.render('checkout');
+});
+
+router.post('/submit-cart', async (req, res) => {
+  return res.redirect(`checkout${qs.stringify(req.body, { addQueryPrefix: true })}`);
+});
+
 
 /**
  * Stripe integration to accept all types of payments with 3 POST endpoints.
@@ -182,9 +192,9 @@ router.get('/config', (req, res) => {
   });
 });
 
-// Retrieve all products.
+// Retrieve all products that match with IDs gathered from url.
 router.get('/products', async (req, res) => {
-  res.json(await products.list());
+  res.json(await products.list( [req.query.tree, ...req.query.add_ons] ));
 });
 
 // Retrieve a product by ID.
