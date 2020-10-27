@@ -16,6 +16,25 @@ const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(config.stripe.secretKey);
 stripe.setApiVersion(config.stripe.apiVersion);
+const passport = require('passport');
+
+require('./passport')
+
+const isAuthenticated = require('./auth');
+
+
+router.get('/account', isAuthenticated, (req, res) => {
+    res.send('Hello ' + req.user.displayName);
+});
+
+router.get('/auth/facebook', passport.authenticate('facebook', {scope:"email"}));
+
+router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/account', failureRedirect: '/' }));
+
+router.use('/auth/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+});
 
 // Render the main app HTML.
 router.get('/', (req, res) => {

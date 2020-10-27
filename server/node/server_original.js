@@ -11,14 +11,9 @@
 const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const passport = require('passport');
 const path = require('path');
 const ngrok = config.ngrok.enabled ? require('ngrok') : null;
 const app = express();
-
-let session = require('express-session');
 
 // Setup useful middleware.
 app.use(
@@ -32,21 +27,10 @@ app.use(
     },
   })
 );
-app.use(cors());
-app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, '../../public')));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
-
-//passport middleware
-app.use(session({
-    secret: 's3cr3t',
-    resave: true,
-    saveUninitialized: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Define routes.
 app.use('/', require('./routes'));

@@ -92,6 +92,7 @@ class Store {
   // Create the PaymentIntent with the cart details.
   async createPaymentIntent(currency, items) {
     try {
+      //console.log(currency);
       const response = await fetch('/payment_intents', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -167,7 +168,7 @@ class Store {
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
       };
-      const quantity = 1;
+      const quantity = randomQuantity(1, 2);
       let sku = product.skus.data[0];
       let skuPrice = this.formatPrice(sku.price, sku.currency);
       let lineItemPrice = this.formatPrice(sku.price * quantity, sku.currency);
@@ -177,8 +178,7 @@ class Store {
         <img class="image" src="/images/products/${product.id}.png" alt="${product.name}">
         <div class="label">
           <p class="product">${product.name}</p>
-          <p class="sku">${product.description}</p>
-          
+          <p class="sku">${Object.values(sku.attributes).join(' ')}</p>
         </div>
         <p class="count">${quantity} x ${skuPrice}</p>
         <p class="price">${lineItemPrice}</p>`;

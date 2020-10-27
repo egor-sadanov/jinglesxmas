@@ -82,7 +82,7 @@
             <p class="notice">Click the button below to generate a QR code for WeChat.</p>
           </div>
         </section>
-        <button class="payment-button" type="submit">Pay</button>
+
         <section>
           <h2>Shipping &amp; Billing Information</h2>
           <fieldset class="with-state">
@@ -120,10 +120,11 @@
           <h2>Contact Details</h2>
           <fieldset>
 
-              <label>
+              <label class="phone">
                 
                 <span>Phone</span>
-                <div id="phone" class="field" placeholder="3000" maxlength="4"></div>
+                  <input name="phone" class="field" placeholder="0400 000 000" maxlength="12" required>
+
               </label>
               <label>
               <span>Email</span>
@@ -131,7 +132,7 @@
             </label>
             </fieldset>
         </section>
-        
+               <button class="payment-button" type="submit">Pay</button> 
       </form>
       <div id="card-errors" class="element-errors"></div>
       <div id="iban-errors" class="element-errors"></div>
@@ -205,8 +206,6 @@
   <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js" integrity="sha384-3zSEDfvllQohrq0PHL1fOXJuC/jSOO34H46t6UQfobFOmxE5BpjjaIJY5F2/bMnU" crossorigin="anonymous"></script>
   <!-- Library for generating fake user information -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js" integrity="sha384-PlFzuf6GOlJNxLuosezJ/jwndIVZ2hWI/AmvYQtBzstOdLtcUe6DPSI4LsqwiN1y" crossorigin="anonymous"></script>
-  <!-- App -->
-  <script src="/javascripts/generate.js"></script>
   <script src="/javascripts/store.js"></script>
   <script src="/javascripts/payments.js"></script>
 </body>
