@@ -1,0 +1,41 @@
+import { css } from 'emotion'
+import { RED, CTA } from '../../colorConsts'
+
+export const datesSelect = css`
+  border: 1px solid ${CTA};
+  color: ${RED} !important;
+  line-height: 1.3;
+  padding: .6em 1.4em .5em .8em;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto 1em;
+  border: 1px solid #aaa;
+  box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+  border-radius: .5em;
+
+  @media (min-width: 768px) {
+    width: 80%;
+    max-width: 80%;
+  }
+
+`
+
+export const calendar = css`
+  
+    td.CalendarDay__selected, 
+    td.CalendarDay__selected:active, 
+    td.CalendarDay__selected:hover {
+        border: 1px double ${CTA} !important;
+        background: ${CTA} !important;
+    }
+
+    .DayPicker {
+        margin: 0 auto;
+    }
+
+    margin: 20px auto;
+    text-align: center;
+`
+
+
