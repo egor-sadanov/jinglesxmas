@@ -29,6 +29,9 @@ export const treeTile = css`
 
 export const activeClass = css`
   border: 1px solid ${RED};
+  label {
+    font-weight: 600;
+  }
 `
 
 export const bigTree = css`

@@ -31,11 +31,18 @@ export const calendar = css`
     }
 
     .DayPicker {
-        margin: 0 auto;
+        margin: .6em auto 1em;
     }
 
-    margin: 20px auto;
+    label {
+        color: ${CTA};
+        margin: .6em auto;
+        font-size: 1.2em;
+    }
+
+    margin: 1em auto 0;
     text-align: center;
+
 `
 
 

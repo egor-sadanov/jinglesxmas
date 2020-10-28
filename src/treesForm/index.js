@@ -133,8 +133,9 @@ class TreesForm extends React.Component {
         <div className={styles.checkboxesWpap}>
           {checkboxes}
         </div>
-        <PostCodeInput />
+        <hr className={styles.hr}/>
         <DatesField />
+        <PostCodeInput />
         <hr className={styles.hr}/>
         <button className={styles.cta}>
             {`Buy for $${total}`}
