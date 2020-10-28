@@ -37,14 +37,17 @@ router.use('/auth/logout', (req, res) => {
     res.redirect('/');
 });
 
-// Render the main app HTML.
-router.get('/checkout', (req, res) => {
-  res.render('checkout.html');
+
+// Render Checkoout page.
+router.post('/checkout', (req, res) => {
+  //res.render('checkout.html');
+  res.sendFile(path.join(__dirname, '../../public', 'checkout.html'));
 });
 
-// Render the main app HTML.
-router.get('/hello', (req, res) => {
-  res.send('App is running.');
+// Render Terms and conditions.
+router.get('/terms', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../public', 'terms.html'));
+
 });
 
 // Render the main app HTML.
