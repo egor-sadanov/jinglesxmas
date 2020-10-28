@@ -158,7 +158,6 @@
 
   // Callback when a payment method is created.
   paymentRequest.on('paymentmethod', async (event) => {
-    console.log(event);
     // Confirm the PaymentIntent with the payment method returned from the payment request.
     const {error} = await stripe.confirmCardPayment(
       paymentIntent.client_secret,
@@ -196,34 +195,17 @@
 
   // Callback when the shipping address is updated.
   paymentRequest.on('shippingaddresschange', (event) => {
-    let shippingOpt = 'extra';
-    if (event.shippingAddress.postalCode === '3000')
-      shippingOpt = 'standard';
-
-    const response =  store.updatePaymentIntentWithShippingCost(
-      paymentIntent.id,
-      store.getLineItems(),
-      shippingOpt
-    );
-    event.updateWith({
-      total: {
-        label: 'Total',
-        amount: response.paymentIntent.amount,
-      },
-      status: 'success'
-    });
+    event.updateWith({status: 'success'});
   });
 
   // Callback when the shipping option is changed.
-  paymentRequest.on('shippingoptionchange', function (event) {
-    console.log(event);
+  paymentRequest.on('shippingoptionchange', async (event) => {
     // Update the PaymentIntent to reflect the shipping cost.
-    const response =  store.updatePaymentIntentWithShippingCost(
+    const response = await store.updatePaymentIntentWithShippingCost(
       paymentIntent.id,
       store.getLineItems(),
       event.shippingOption
     );
-    // updates UI for payment total including shipping cost
     event.updateWith({
       total: {
         label: 'Total',
@@ -681,7 +663,6 @@
   } else {
     // Update the interface to display the checkout form.
     mainElement.classList.add('checkout');
-    // const shippingOption = 'extra';
     // Create the PaymentIntent with the cart details.
     const response = await store.createPaymentIntent(
       config.currency,

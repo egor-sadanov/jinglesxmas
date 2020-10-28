@@ -69,7 +69,7 @@ class Store {
   loadProducts() {
     if (!this.productsFetchPromise) {
       this.productsFetchPromise = new Promise(async resolve => {
-        const productsResponse = await fetch(`/products`);  
+        const productsResponse = await fetch('/products');  
         const products = (await productsResponse.json()).data;
         if (!products.length) {
           throw new Error(
