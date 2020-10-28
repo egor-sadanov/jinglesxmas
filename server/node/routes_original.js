@@ -14,45 +14,12 @@ const config = require('./config');
 const {products} = require('./inventory');
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 const stripe = require('stripe')(config.stripe.secretKey);
 stripe.setApiVersion(config.stripe.apiVersion);
-const passport = require('passport');
-
-require('./passport')
-
-const isAuthenticated = require('./auth');
-
-
-router.get('/account', isAuthenticated, (req, res) => {
-    res.send('Hello ' + req.user.displayName);
-});
-
-router.get('/auth/facebook', passport.authenticate('facebook', {scope:"email"}));
-
-router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/account', failureRedirect: '/' }));
-
-router.use('/auth/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
-});
-
-
-// Render Checkoout page.
-router.post('/checkout', (req, res) => {
-  //res.render('checkout.html');
-  res.sendFile(path.join(__dirname, '../../public', 'checkout.html'));
-});
-
-// Render Terms and conditions.
-router.get('/terms', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../public', 'terms.html'));
-
-});
 
 // Render the main app HTML.
 router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../public', 'index.html'));
+  res.render('index.html');
 });
 
 /**
