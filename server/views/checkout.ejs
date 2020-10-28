@@ -82,13 +82,15 @@
             <p class="notice">Click the button below to generate a QR code for WeChat.</p>
           </div>
         </section>
+
         <button class="payment-button" type="submit">Pay</button>
+
         <section>
           <h2>Shipping &amp; Billing Information</h2>
           <fieldset class="with-state">
             <label>
               <span>Name</span>
-              <input name="name" id="name" class="field" placeholder="Jenny Rosen" required>
+              <input name="name" id="customer-name" class="field" placeholder="Jenny Rosen" required>
             </label>
             <label>
               <span>Address</span>
@@ -104,7 +106,7 @@
             </label>
             <label class="zip">
               <span>Postcode</span>
-              <input name="postal_code" class="field" placeholder="3000" maxlength="4" required>
+              <input name="postal_code" class="field" placeholder="3000" minlength="4" maxlength="4" required>
             </label>
              <label class="select">
               <span>Country</span>
@@ -121,11 +123,11 @@
           <fieldset class="contact-details">
             <label>
               <span>Phone</span>
-              <div id="phone" class="field" placeholder="3000" maxlength="4"></div>
+              <input name="phone" type="phone" id="phone" class="field" placeholder="3000" maxlength="11" required></input>
             </label>
             <label>
               <span>Email</span>
-              <input name="email" type="email" id="mail" class="field" placeholder="alex@example.com" required>
+              <input name="email" type="email" id="customer-mail" class="field" placeholder="alex@example.com" required>
             </label>
           </fieldset>
         </section>
@@ -168,7 +170,7 @@
       </div>
       <div class="line-item shipping">
         <p class="label">Shipping</p>
-        <p class="price">Free</p>
+        <p class="price" shipping-total></p>
       </div>
       <div class="line-item demo">
         <div id="demo">
@@ -193,6 +195,13 @@
       <div class="line-item total">
         <p class="label">Total</p>
         <p class="price" data-total></p>
+        <div id="shipping-option"> 
+          <!-- <button id="shipship">click</button>                -->
+          <!-- <select>
+            <option>standard</option>
+            <option>extra</option>
+          </select> -->
+        </div>
       </div>
     </div>
   </aside>

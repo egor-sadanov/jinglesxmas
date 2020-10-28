@@ -12,45 +12,32 @@
 
 const config = require('./config');
 const {products} = require('./inventory');
+const postcodes = require('../postcodes/postcodes.json');
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 const stripe = require('stripe')(config.stripe.secretKey);
 stripe.setApiVersion(config.stripe.apiVersion);
-const passport = require('passport');
-
-require('./passport')
-
-const isAuthenticated = require('./auth');
-
-
-router.get('/account', isAuthenticated, (req, res) => {
-    res.send('Hello ' + req.user.displayName);
-});
-
-router.get('/auth/facebook', passport.authenticate('facebook', {scope:"email"}));
-
-router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/account', failureRedirect: '/' }));
-
-router.use('/auth/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
-});
-
-// Render the main app HTML.
-router.get('/checkout', (req, res) => {
-  res.render('checkout.html');
-});
-
-// Render the main app HTML.
-router.get('/hello', (req, res) => {
-  res.send('App is running.');
-});
 
 // Render the main app HTML.
 router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../public', 'index.html'));
+  res.render('index');
 });
+
+// Collect data from submit form and render checkout page
+router.post('/checkout', async (req, res) => {
+  req.session.postcode = req.body.postal_code;
+  req.session.shippingDate = req.body.date;
+
+  if (!req.body.add_ons) {
+    req.session.ids = [req.body.tree];
+  } else if (typeof req.body.add_ons === 'string' || req.body.add_ons instanceof String ) {
+    req.session.ids = [req.body.tree, req.body.add_ons];
+  } else
+    req.session.ids = [req.body.tree, ...req.body.add_ons];
+
+  res.render(`checkout`);
+});
+
 
 /**
  * Stripe integration to accept all types of payments with 3 POST endpoints.
@@ -77,15 +64,48 @@ const calculatePaymentAmount = async items => {
   return total;
 };
 
+// Get shipping option based on postcode
+router.get('/shippingOption/:postcode', async (req, res) => {
+  try {
+    let postcode = parseInt(req.params.postcode);
+    let shippingOption = postcodes[postcode].shippingOption;
+    let shippingCost = products.getShippingCost(shippingOption);
+    return res.status(200).json({
+      shippingOption, 
+      shippingCost,
+    });
+  } catch (err) {
+    // handle error in the future implementation
+    // for now simply return standard shipping cost
+    // let message = "Invalid postcode. " + err.message;
+    // return res.status(404).json({error: message});
+    return res.json({
+      shippingOption: "standard", 
+      shippingCost: 2500
+    });
+  }
+});
+
 // Create the PaymentIntent on the backend.
 router.post('/payment_intents', async (req, res, next) => {
   let {currency, items} = req.body;
   const amount = await calculatePaymentAmount(items);
 
+  // prepare metadata for paymentIntent 
+  const metadata = {};
+  let productName = "";
+  for (var i = 0; i < req.session.ids.length; i++) {
+    productName = "product_" + (i + 1);
+    metadata[productName] = req.session.ids[i]
+  }
+  metadata.shippingDate = req.session.shippingDate;
+  
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency,
+      metadata,
+      setup_future_usage: 'off_session',
       payment_method_types: config.paymentMethods,
     });
     return res.status(200).json({paymentIntent});
@@ -98,7 +118,7 @@ router.post('/payment_intents', async (req, res, next) => {
 router.post('/payment_intents/:id/shipping_change', async (req, res, next) => {
   const {items, shippingOption} = req.body;
   let amount = await calculatePaymentAmount(items);
-  amount += products.getShippingCost(shippingOption.id);
+  amount += products.getShippingCost(shippingOption);
 
   try {
     const paymentIntent = await stripe.paymentIntents.update(req.params.id, {
@@ -212,9 +232,9 @@ router.get('/config', (req, res) => {
   });
 });
 
-// Retrieve all products.
+// Retrieve all products that match with IDs gathered from url.
 router.get('/products', async (req, res) => {
-  res.json(await products.list());
+  res.json(await products.list( req.session.ids ));
 });
 
 // Retrieve a product by ID.
