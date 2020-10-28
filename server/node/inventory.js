@@ -17,7 +17,6 @@ stripe.setApiVersion('2018-02-28');
 
 // List all products.
 const listProducts = async () => {
-  //return await stripe.products.list({limit: 3, type: 'good'});
   return await stripe.products.list({ids : ['01_tree_6', '04_stand_std','06_installation']});
 };
 
@@ -30,7 +29,7 @@ const retrieveProduct = async productId => {
 const getShippingCost = shippingOption => {
   return config.shippingOptions.filter(
     option => option.id === shippingOption
-  )[1].amount;
+  )[0].amount;
 };
 
 exports.products = {

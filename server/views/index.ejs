@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Stripe Payments Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@stripe">
+  <meta name="twitter:title" content="Stripe Payments Demo">
+  <meta name="twitter:description" content="Sample store accepting universal payments on the web with Stripe Elements, Payment Request, Apple Pay, Google Pay, and the Sources API.">
+  <meta name="twitter:image" content="https://stripe-payments-demo.appspot.com/images/twitter.png">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/store.css">
+  <link rel="icon" type="image/png" sizes="48x41" href="/images/index.png">
+</head>
+
+<body>
+  <main id="main" class="loading">
+    <header class="header">
+      <a class="facebook" href="https://www.facebook.com/Jinglesxmt" target="_blank">Follow us</a>
+    </header>
+    <div>
+      <h1>Test Create Checkout Session</h1>
+      <form method="POST" action="submit-cart">
+        <div>
+          <input type="radio" id="tree_6" name="tree" value="tree_6" checked>
+          <label for="huey">Tree 6</label>
+        </div>
+        <div>
+          <input type="radio" id="tree_7" name="tree" value="tree_7">
+          <label for="dewey">Tree 7</label>
+        </div>
+        <div>
+          <input type="radio" id="tree_8" name="tree" value="tree_8">
+          <label for="louie">Tree 8</label>
+        </div>
+
+        <h4>Add-ons</h4>
+        <input type="checkbox" name="add_ons" value="stand_std" class="mycheck"> <span style="font-size: 1em">Cinco tree stand</span><br/>
+        <input type="checkbox" name="add_ons" value="installation" class="mycheck"><span style="font-size: 1em">Tree installation</span><br/>
+        <input type="checkbox" name="add_ons" value="watering" class="mycheck"><span style="font-size: 1em">Watering Kit</span><br/>
+        <input type="checkbox" name="add_ons" value="preservative" class="mycheck"><span style="font-size: 1em">Preservative</span><br/>
+        <input type="checkbox" name="add_ons" value="removal" class="mycheck"><span style="font-size: 1em">Tree Disposal</span>
+
+        <button type="submit">Go to Checkout</button>
+      </form>
+    </div>
+  </main>
+  <!-- Stripe.js v3 for Elements -->
+  <script src="https://js.stripe.com/v3/"></script>
+</body>
+
+</html>
+ 

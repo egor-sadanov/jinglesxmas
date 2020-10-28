@@ -20,6 +20,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.1",
     "body-parser": "^1.17.1",
     "classnames": "^2.2.6",
     "cookie-parser": "^1.4.5",
@@ -35,7 +36,7 @@
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
+    "react": "^16.14.0",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",

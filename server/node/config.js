@@ -11,10 +11,10 @@ require('dotenv').config();
 
 module.exports = {
   // Default country for the checkout form.
-  country: 'US',
+  country: 'AU',
 
   // Store currency.
-  currency: 'eur',
+  currency: 'aud',
 
   // Supported payment methods for the store.
   // Some payment methods support only a subset of currencies.
@@ -22,15 +22,15 @@ module.exports = {
   paymentMethods: [
     // 'ach_credit_transfer', // usd (ACH Credit Transfer payments must be in U.S. Dollars)
     'alipay', // aud, cad, eur, gbp, hkd, jpy, nzd, sgd, or usd.
-    'bancontact', // eur (Bancontact must always use Euros)
+    //'bancontact', // eur (Bancontact must always use Euros)
     'card', // many (https://stripe.com/docs/currencies#presentment-currencies)
-    'eps', // eur (EPS must always use Euros)
-    'ideal', // eur (iDEAL must always use Euros)
-    'giropay', // eur (Giropay must always use Euros)
-    'multibanco', // eur (Multibanco must always use Euros)
+    //'eps', // eur (EPS must always use Euros)
+    //'ideal', // eur (iDEAL must always use Euros)
+    //'giropay', // eur (Giropay must always use Euros)
+    //'multibanco', // eur (Multibanco must always use Euros)
     // 'sepa_debit', // Restricted. See docs for activation details: https://stripe.com/docs/sources/sepa-debit
-    'p24', // eur, pln
-    'sofort', // eur (SOFORT must always use Euros)
+   // 'p24', // eur, pln
+    //'sofort', // eur (SOFORT must always use Euros)
     'wechat', // aud, cad, eur, gbp, hkd, jpy, sgd, or usd.
   ],
 
@@ -41,7 +41,7 @@ module.exports = {
   // You can fill them in your own `.env` file.
   stripe: {
     // The two-letter country code of your Stripe account (required for Payment Request).
-    country: process.env.STRIPE_ACCOUNT_COUNTRY || 'US',
+    country: process.env.STRIPE_ACCOUNT_COUNTRY || 'AU',
     // API version to set for this app (Stripe otherwise uses your default account version).
     apiVersion: '2019-03-14',
     // Use your test keys for development and live keys for real charges in production.
@@ -58,13 +58,13 @@ module.exports = {
     {
       id: 'free',
       label: 'Free Shipping',
-      detail: 'Delivery within 5 days',
+      detail: 'Delivery according selected date',
       amount: 0,
     },
     {
-      id: 'express',
-      label: 'Express Shipping',
-      detail: 'Next day delivery',
+      id: 'weekend',
+      label: 'Weekend Shipping',
+      detail: 'Next available weekend delivery',
       amount: 500,
     },
   ],
@@ -80,5 +80,13 @@ module.exports = {
     port: process.env.PORT || 8000,
     subdomain: process.env.NGROK_SUBDOMAIN,
     authtoken: process.env.NGROK_AUTHTOKEN,
+  },
+    //Facebook authorization options and keys
+  fb_strategy:{
+    clientID: process.env.FB_CLIENT_ID,
+    clientSecret: process.env.FB_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    profileFields: ['id', 'displayName','email'],
+    enableProof: true
   },
 };
