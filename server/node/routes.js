@@ -14,23 +14,43 @@ const config = require('./config');
 const {products} = require('./inventory');
 const express = require('express');
 const router = express.Router();
-const qs = require('qs');
+const path = require('path');
 const stripe = require('stripe')(config.stripe.secretKey);
 stripe.setApiVersion(config.stripe.apiVersion);
+const passport = require('passport');
+
+require('./passport')
+
+const isAuthenticated = require('./auth');
+
+
+router.get('/account', isAuthenticated, (req, res) => {
+    res.send('Hello ' + req.user.displayName);
+});
+
+router.get('/auth/facebook', passport.authenticate('facebook', {scope:"email"}));
+
+router.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/account', failureRedirect: '/' }));
+
+router.use('/auth/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+});
+
+// Render the main app HTML.
+router.get('/checkout', (req, res) => {
+  res.render('checkout.html');
+});
+
+// Render the main app HTML.
+router.get('/hello', (req, res) => {
+  res.send('App is running.');
+});
 
 // Render the main app HTML.
 router.get('/', (req, res) => {
-  res.render('index');
+  res.sendFile(path.join(__dirname, '../../public', 'index.html'));
 });
-
-router.get('/checkout', (req, res) => {
-  res.render('checkout');
-});
-
-router.post('/submit-cart', async (req, res) => {
-  return res.redirect(`checkout${qs.stringify(req.body, { addQueryPrefix: true })}`);
-});
-
 
 /**
  * Stripe integration to accept all types of payments with 3 POST endpoints.
@@ -192,9 +212,9 @@ router.get('/config', (req, res) => {
   });
 });
 
-// Retrieve all products that match with IDs gathered from url.
+// Retrieve all products.
 router.get('/products', async (req, res) => {
-  res.json(await products.list( [req.query.tree, ...req.query.add_ons] ));
+  res.json(await products.list());
 });
 
 // Retrieve a product by ID.
