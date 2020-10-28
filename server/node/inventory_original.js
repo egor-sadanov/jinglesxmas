@@ -17,7 +17,7 @@ stripe.setApiVersion('2018-02-28');
 
 // List all products.
 const listProducts = async () => {
-  return await stripe.products.list({ids : ['01_tree_6', '04_stand_std','06_installation']});
+  return await stripe.products.list({limit: 3, type: 'good'});
 };
 
 // Retrieve a product by ID.
