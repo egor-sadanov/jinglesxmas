@@ -44,7 +44,7 @@ export const specialOffer = css`
 
     @media (min-width: 768px) {
       background-image: url("./images/bells_desktop.png"); 
-      background-size: 15vw; //200px;
+      background-size: 15vw; 
       top:-2.4vw;
       left: -10vw;
       height: 18vw; 
@@ -68,10 +68,19 @@ export const specialOffer = css`
 export const subTextRed = css`
   color: ${RED};
   width: 100%;
-  margin: 0 auto 11em;
+  margin: 11em auto 1em;
   font-size: 0.9em;
 
-  @media (min-width: 500px) {
+  @media (min-width: 360px) {
+    margin: 0 auto 11em;
+  }
+
+  @media (min-width: 400px) {
+    margin: 0 auto 12em;
+  }
+
+  @media (min-width: 480px) {
+    font-size: 1.1em;
     width: 28em;
   }
 
