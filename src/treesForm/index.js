@@ -1,6 +1,8 @@
 import React from 'react'
 import TreeTile from './treeTile'
 import Checkbox from './checkbox'
+import DatesField from './datesField'
+import PostCodeInput from './postCodeInput'
 import * as styles from './styles'
 import { TREES } from './trees'
 import { ADDITIONAL_ITEMS } from './additionalItems'
@@ -131,6 +133,8 @@ class TreesForm extends React.Component {
         <div className={styles.checkboxesWpap}>
           {checkboxes}
         </div>
+        <PostCodeInput />
+        <DatesField />
         <hr className={styles.hr}/>
         <button className={styles.cta}>
             {`Buy for $${total}`}
