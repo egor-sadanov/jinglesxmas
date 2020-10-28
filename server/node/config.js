@@ -85,7 +85,8 @@ module.exports = {
   fb_strategy:{
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    callbackURL: "https://softbytes.au.ngrok.io/auth/facebook/callback",
+
     profileFields: ['id', 'displayName','email'],
     enableProof: true
   },

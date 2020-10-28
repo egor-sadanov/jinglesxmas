@@ -1,6 +1,8 @@
 import React from 'react'
 import TreeTile from './treeTile'
 import Checkbox from './checkbox'
+import DatesField from './datesField'
+import PostCodeInput from './postCodeInput'
 import * as styles from './styles'
 import { TREES } from './trees'
 import { ADDITIONAL_ITEMS } from './additionalItems'
@@ -22,6 +24,7 @@ class TreesForm extends React.Component {
     }
     this.selectTree = this.selectTree.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   selectTree(tree) {
@@ -29,7 +32,6 @@ class TreesForm extends React.Component {
       const trees = state.trees.map(item => {
         return {...item, selected: item.name === tree.name}
       })
-      // debugger
       return {
         ...state, 
         trees: trees, 
@@ -55,7 +57,7 @@ class TreesForm extends React.Component {
 
     const item = ADDITIONAL_ITEMS.find(i => i.name === itemName)
 
-    if (!isChecked){
+    if (!isChecked) {
       checkedItemsSet.delete(item)
     } else {
       checkedItemsSet.add(item)
@@ -82,6 +84,19 @@ class TreesForm extends React.Component {
     }
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    console.log("submit");
+
+    fetch('https://your-node-server-here.com/api/submit-cart', {
+        method: 'POST',
+        body: JSON.stringify({tree: this.state.selectedTree.name})
+      }).then(function(response) {
+        console.log(response)
+        return response.json();
+      });
+}
+
   render() {
     const { trees, total, checkedItemsSet, disabledItemsSet } = this.state
 
@@ -90,8 +105,8 @@ class TreesForm extends React.Component {
     ))
 
     const checkboxes = ADDITIONAL_ITEMS.map(item => (
-        <div>
-          <label key={item.key} className={styles.checkboxLabel}>
+        <div key={item.key}>
+          <label className={styles.checkboxLabel}>
             <Checkbox 
               name={item.name} 
               checked={checkedItemsSet.has(item)} 
@@ -105,7 +120,11 @@ class TreesForm extends React.Component {
     
 
     return (
-      <div className={styles.boxWpap}>
+      <form 
+        className={styles.boxWpap} 
+        method="post"     
+        onSubmit={this.onSubmit}
+      >
         <h2 className={styles.h2}>Order now</h2>
         <hr className={styles.hr}/>
         <div className={styles.tilesWpap}>
@@ -115,10 +134,13 @@ class TreesForm extends React.Component {
           {checkboxes}
         </div>
         <hr className={styles.hr}/>
+        <DatesField />
+        <PostCodeInput />
+        <hr className={styles.hr}/>
         <button className={styles.cta}>
             {`Buy for $${total}`}
         </button>
-      </div>
+      </form>
     )
   }
 }

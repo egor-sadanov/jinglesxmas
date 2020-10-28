@@ -24,7 +24,7 @@ export const TreeTile = ({ tree = {}, selectTree }) => {
       <div className={tilesClasses} 
           onClick={() => {selectTree(tree)}}
       >
-        <div className={styles.title}>{name}</div>
+        <label className={styles.title}>{name}</label>
         <div>{height}</div>
         <hr className={styles.hr}/>
         <div>{`$${price}`}</div>

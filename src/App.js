@@ -20,11 +20,36 @@ const PrimaryLayout = () => (
     </div>
     <TreesForm></TreesForm>
     <div className={styles.car}></div>
+    <div className={styles.subTextGreen}>
+      Delivery starts in December. Additional area surcharge may apply for remote suburbs and CBD.
+    </div>
   </div>
 )
 
-const App = () => (
-    <PrimaryLayout />
-)
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      done: undefined
+    };
+  }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ done: true })
+    }, 200);
+  }
+
+  render() {
+    return (
+      <>
+        {this.state.done ? (
+          <PrimaryLayout />
+        ) : (
+          <h1 className="loading">Jingles Xmas Trees</h1>
+        )}
+      </>
+    );
+  }
+}
 
 export default App
