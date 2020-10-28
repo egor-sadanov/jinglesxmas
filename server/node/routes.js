@@ -14,6 +14,7 @@ const config = require('./config');
 const {products} = require('./inventory');
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 const stripe = require('stripe')(config.stripe.secretKey);
 stripe.setApiVersion(config.stripe.apiVersion);
 const passport = require('passport');
@@ -36,9 +37,20 @@ router.use('/auth/logout', (req, res) => {
     res.redirect('/');
 });
 
+// Render Checkoout page.
+router.post('/checkout', (req, res) => {
+  //res.render('checkout.html');
+  res.sendFile(path.join(__dirname, '../../public', 'checkout.html'));
+});
+
+// Render Terms and conditions.
+router.get('/terms', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../public', 'terms.html'));
+});
+
 // Render the main app HTML.
 router.get('/', (req, res) => {
-  res.render('index.html');
+  res.sendFile(path.join(__dirname, '../../public', 'index.html'));
 });
 
 /**
