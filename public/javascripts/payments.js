@@ -150,10 +150,10 @@
     total: {
       label: 'Total',
       amount: store.getPaymentTotal(),
+      pending: true
     },
     requestShipping: true,
     requestPayerEmail: true,
-    shippingOptions: config.shippingOptions,
   });
 
   // Callback when a payment method is created.
@@ -222,9 +222,8 @@
 
   // Create the Payment Request Button.
   const paymentRequestButton = elements.create('paymentRequestButton', {
-    paymentRequest,
+    paymentRequest: paymentRequest,
   });
-
   // Check if the Payment Request is available (or Apple Pay on the Web).
   const paymentRequestSupport = await paymentRequest.canMakePayment();
   if (paymentRequestSupport) {
@@ -255,13 +254,22 @@
       selectCountry(event.target.value);
     });
 
+  // Listen to changes to the user-selected postcode.
+  form
+    .querySelector('input[name=postal_code]')
+    .addEventListener('change', (event) => {
+      event.preventDefault();
+      updateShippingCost(parseInt(event.target.value));
+    });
+
   // Submit handler for our payment form.
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-
+    
     // Retrieve the user information from the form.
     const payment = form.querySelector('input[name=payment]:checked').value;
     const name = form.querySelector('input[name=name]').value;
+    const phone = form.querySelector('input[name=phone]').value;
     const country = form.querySelector('select[name=country] option:checked')
       .value;
     const email = form.querySelector('input[name=email]').value;
@@ -279,6 +287,7 @@
         country,
       },
     };
+
     // Disable the Pay button to prevent multiple click events.
     submitButton.disabled = true;
     submitButton.textContent = 'Processing…';
@@ -292,11 +301,14 @@
             card,
             billing_details: {
               name,
+              email,
+              phone,
               address: billingAddress,
             },
           },
           shipping,
-        }
+         },
+        {handleActions: false}
       );
       handlePayment(response);
     } else if (payment === 'sepa_debit') {
@@ -651,11 +663,10 @@
   } else {
     // Update the interface to display the checkout form.
     mainElement.classList.add('checkout');
-
     // Create the PaymentIntent with the cart details.
     const response = await store.createPaymentIntent(
       config.currency,
-      store.getLineItems()
+      store.getLineItems(),
     );
     paymentIntent = response.paymentIntent;
   }
@@ -797,6 +808,31 @@
     // Trigger the methods to show relevant fields and payment methods on page load.
     showRelevantFormFields();
     showRelevantPaymentMethods();
+  };
+
+  // custom implementation of updating shipping cost whe the user prompts the postal code
+  const updateShippingCost = async (postcode) => {
+    const responses = await fetch(`/shippingOption/${postcode}`);
+    const {shippingOption, shippingCost}  = await responses.json();
+
+    // Update the PaymentIntent to reflect the shipping cost.
+    const response =  await store.updatePaymentIntentWithShippingCost(
+      paymentIntent.id,
+      store.getLineItems(),
+      shippingOption
+    );
+    paymentRequest.update({
+      total: {
+        label: 'Total',
+        amount: response.paymentIntent.amount,
+      },
+    });
+    const amount = store.formatPrice(
+      response.paymentIntent.amount,
+      config.currency
+    );
+    store.updateTotalLabelText(shippingCost);
+    updateSubmitButtonPayText(`Pay ${amount}`);
   };
 
   // Show only form fields that are relevant to the selected country.

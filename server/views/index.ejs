@@ -21,7 +21,7 @@
     </header>
     <div>
       <h1>Test Create Checkout Session</h1>
-      <form method="POST" action="submit-cart">
+      <form method="POST" action="checkout">
         <div>
           <input type="radio" id="tree_6" name="tree" value="tree_6" checked>
           <label for="huey">Tree 6</label>
@@ -34,18 +34,33 @@
           <input type="radio" id="tree_8" name="tree" value="tree_8">
           <label for="louie">Tree 8</label>
         </div>
-
-        <h4>Add-ons</h4>
-        <input type="checkbox" name="add_ons" value="stand_std" class="mycheck"> <span style="font-size: 1em">Cinco tree stand</span><br/>
-        <input type="checkbox" name="add_ons" value="installation" class="mycheck"><span style="font-size: 1em">Tree installation</span><br/>
-        <input type="checkbox" name="add_ons" value="watering" class="mycheck"><span style="font-size: 1em">Watering Kit</span><br/>
-        <input type="checkbox" name="add_ons" value="preservative" class="mycheck"><span style="font-size: 1em">Preservative</span><br/>
-        <input type="checkbox" name="add_ons" value="removal" class="mycheck"><span style="font-size: 1em">Tree Disposal</span>
-
+        <div>
+          <h4>Add-ons</h4>
+          <input type="checkbox" name="add_ons" value="stand_std" class="mycheck"><span style="font-size: 1em">Cinco tree stand</span><br/>
+          <input type="checkbox" name="add_ons" value="installation" class="mycheck"><span style="font-size: 1em">Tree installation</span><br/>
+          <input type="checkbox" name="add_ons" value="watering" class="mycheck"><span style="font-size: 1em">Watering Kit</span><br/>
+          <input type="checkbox" name="add_ons" value="preservative" class="mycheck"><span style="font-size: 1em">Preservative</span><br/>
+          <input type="checkbox" name="add_ons" value="removal" class="mycheck"><span style="font-size: 1em">Tree Disposal</span>
+        </div>
+        <div>        
+          <h4>Select Date</h4>
+          <select name="date">
+            <option value="2020-12-05" selected="selected">Saturday 5th December</option>
+            <option value="2020-12-10">Thursday 10th December</option>
+            <option value="2020-12-12">Saturday 12th December</option>
+            <option value="2020-12-17">Thursday 17th December</option>
+            <option value="2020-12-19">Saturday 19th December</option>
+            <option value="2020-12-24">Thursday 24th December</option>
+          </select>
+        </div>
+        <div>
+          <h4>Select Date</h4>
+          <input name="postal_code" placeholder="3000" minlength="4" maxlength="4" required>
+        </div>
         <button type="submit">Go to Checkout</button>
       </form>
     </div>
-  </main>
+  </main> 
   <!-- Stripe.js v3 for Elements -->
   <script src="https://js.stripe.com/v3/"></script>
 </body>
