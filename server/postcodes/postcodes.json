@@ -1,0 +1,662 @@
+{
+	"3000": {	
+		"deliveryCentre": "CITY DELIVERY CENTRE",
+		"shippingOption": "cbd"
+	},
+	"3001": {	
+		"deliveryCentre": "CITY MAIL PROCESSING CENTRE",
+		"shippingOption": "cbd"
+	},
+	"3002": {	
+		"deliveryCentre": "CITY DELIVERY CENTRE",
+		"shippingOption": "cbd"
+	},
+	"3003": {	
+		"deliveryCentre": "CITY DELIVERY CENTRE",
+		"shippingOption": "cbd"
+	},
+	"3004": {	
+		"deliveryCentre": "CITY DELIVERY CENTRE",
+		"shippingOption": "cbd"
+	},
+	"3005": {	
+		"deliveryCentre": "CITY DELIVERY CENTRE",
+		"shippingOption": "cbd"
+	},
+	"3006": {	
+		"deliveryCentre": "SOUTH MELBOURNE DC",
+		"shippingOption": "standard"
+	},
+	"3008": {	
+		"deliveryCentre": "CITY DELIVERY CENTRE",
+		"shippingOption": "cbd"
+	},
+	"3010": {	
+		"deliveryCentre": "CARLTON DC",
+		"shippingOption": "standard"
+	},
+	"3011": {	
+		"deliveryCentre": "WEST FOOTSCRAY DC",
+		"shippingOption": "standard"
+	},
+	"3012": {	
+		"deliveryCentre": "WEST FOOTSCRAY DC",
+		"shippingOption": "standard"
+	},
+	"3013": {	
+		"deliveryCentre": "WEST FOOTSCRAY DC",
+		"shippingOption": "standard"
+	},
+	"3015": {	
+		"deliveryCentre": "NEWPORT DC",
+		"shippingOption": "standard"
+	},
+	"3016": {	
+		"deliveryCentre": "NEWPORT DC",
+		"shippingOption": "standard"
+	},
+	"3018": {	
+		"deliveryCentre": "NEWPORT DC",
+		"shippingOption": "standard"
+	},
+	"3019": {	
+		"deliveryCentre": "WEST FOOTSCRAY DC",
+		"shippingOption": "standard"
+	},
+	"3020": {	
+		"deliveryCentre": "SUNSHINE DC",
+		"shippingOption": "standard"
+	},
+	"3021": {	
+		"deliveryCentre": "ST ALBANS DC",
+		"shippingOption": "standard"
+	},
+	"3022": {	
+		"deliveryCentre": "SUNSHINE DC",
+		"shippingOption": "standard"
+	},
+	"3023": {	
+		"deliveryCentre": "SUNSHINE DC",
+		"shippingOption": "standard"
+	},
+	"3024": {	
+		"deliveryCentre": "HOPPERS CROSSING DEL CENTRE",
+		"shippingOption": "standard"
+	},
+	"3025": {	
+		"deliveryCentre": "NEWPORT DC",
+		"shippingOption": "standard"
+	},
+	"3026": {	
+		"deliveryCentre": "HOPPERS CROSSING DEL CENTRE",
+		"shippingOption": "standard"
+	},
+	"3027": {	
+		"deliveryCentre": "HOPPERS CROSSING DEL CENTRE",
+		"shippingOption": "standard"
+	},
+	"3028": {	
+		"deliveryCentre": "HOPPERS CROSSING DEL CENTRE",
+		"shippingOption": "standard"
+	},
+	"3029": {	
+		"deliveryCentre": "HOPPERS CROSSING DEL CENTRE",
+		"shippingOption": "standard"
+	},
+	"3030": {	
+		"deliveryCentre": "HOPPERS CROSSING DEL CENTRE",
+		"shippingOption": "standard"
+	},
+	"3037": {	
+		"deliveryCentre": "ST ALBANS DC",
+		"shippingOption": "standard"
+	},
+	"3038": {	
+		"deliveryCentre": "ST ALBANS DC",
+		"shippingOption": "standard"
+	},
+	"3044": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3046": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3047": {	
+		"deliveryCentre": "SOMERTON DC",
+		"shippingOption": "standard"
+	},
+	"3048": {	
+		"deliveryCentre": "SOMERTON DC",
+		"shippingOption": "standard"
+	},
+	"3049": {	
+		"deliveryCentre": "ST ALBANS DC",
+		"shippingOption": "standard"
+	},
+	"3050": {	
+		"deliveryCentre": "CARLTON DC",
+		"shippingOption": "standard"
+	},
+	"3051": {	
+		"deliveryCentre": "CITY DELIVERY CENTRE",
+		"shippingOption": "cbd"
+	},
+	"3052": {	
+		"deliveryCentre": "CARLTON DC",
+		"shippingOption": "standard"
+	},
+	"3053": {	
+		"deliveryCentre": "CARLTON DC",
+		"shippingOption": "standard"
+	},
+	"3054": {	
+		"deliveryCentre": "CARLTON DC",
+		"shippingOption": "standard"
+	},
+	"3055": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3056": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3057": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3058": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3059": {	
+		"deliveryCentre": "SOMERTON DC",
+		"shippingOption": "standard"
+	},
+	"3060": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3061": {	
+		"deliveryCentre": "SOMERTON DC",
+		"shippingOption": "standard"
+	},
+	"3062": {	
+		"deliveryCentre": "SOMERTON DC",
+		"shippingOption": "standard"
+	},
+	"3063": {	
+		"deliveryCentre": "SOMERTON DC",
+		"shippingOption": "standard"
+	},
+	"3064": {	
+		"deliveryCentre": "SOMERTON DC",
+		"shippingOption": "standard"
+	},
+	"3065": {	
+		"deliveryCentre": "FITZROY DC",
+		"shippingOption": "standard"
+	},
+	"3066": {	
+		"deliveryCentre": "FITZROY DC",
+		"shippingOption": "standard"
+	},
+	"3067": {	
+		"deliveryCentre": "FITZROY DC",
+		"shippingOption": "standard"
+	},
+	"3068": {	
+		"deliveryCentre": "FITZROY DC",
+		"shippingOption": "standard"
+	},
+	"3070": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3071": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3072": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3073": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3074": {	
+		"deliveryCentre": "EPPING DC",
+		"shippingOption": "standard"
+	},
+	"3075": {	
+		"deliveryCentre": "EPPING DC",
+		"shippingOption": "standard"
+	},
+	"3076": {	
+		"deliveryCentre": "EPPING DC",
+		"shippingOption": "standard"
+	},
+	"3078": {	
+		"deliveryCentre": "PRESTON DC",
+		"shippingOption": "standard"
+	},
+	"3079": {	
+		"deliveryCentre": "HEIDELBERG WEST DEL CENTRE",
+		"shippingOption": "standard"
+	},
+	"3081": {	
+		"deliveryCentre": "HEIDELBERG WEST DEL CENTRE",
+		"shippingOption": "standard"
+	},
+	"3082": {	
+		"deliveryCentre": "EPPING DC",
+		"shippingOption": "standard"
+	},
+	"3083": {	
+		"deliveryCentre": "BUNDOORA DC",
+		"shippingOption": "standard"
+	},
+	"3084": {	
+		"deliveryCentre": "HEIDELBERG WEST DEL CENTRE",
+		"shippingOption": "standard"
+	},
+	"3085": {	
+		"deliveryCentre": "HEIDELBERG WEST DEL CENTRE",
+		"shippingOption": "standard"
+	},
+	"3086": {	
+		"deliveryCentre": "BUNDOORA DC",
+		"shippingOption": "standard"
+	},
+	"3087": {	
+		"deliveryCentre": "BUNDOORA DC",
+		"shippingOption": "standard"
+	},
+	"3088": {	
+		"deliveryCentre": "BUNDOORA DC",
+		"shippingOption": "standard"
+	},
+	"3093": {	
+		"deliveryCentre": "BUNDOORA DC",
+		"shippingOption": "standard"
+	},
+	"3094": {	
+		"deliveryCentre": "BUNDOORA DC",
+		"shippingOption": "standard"
+	},
+	"3095": {	
+		"deliveryCentre": "RESEARCH DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3097": {	
+		"deliveryCentre": "RESEARCH DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3101": {	
+		"deliveryCentre": "DEEPDENE DC",
+		"shippingOption": "standard"
+	},
+	"3102": {	
+		"deliveryCentre": "DEEPDENE DC",
+		"shippingOption": "standard"
+	},
+	"3103": {	
+		"deliveryCentre": "DEEPDENE DC",
+		"shippingOption": "standard"
+	},
+	"3104": {	
+		"deliveryCentre": "DEEPDENE DC",
+		"shippingOption": "standard"
+	},
+	"3105": {	
+		"deliveryCentre": "TEMPLESTOWE DC",
+		"shippingOption": "standard"
+	},
+	"3106": {	
+		"deliveryCentre": "TEMPLESTOWE DC",
+		"shippingOption": "standard"
+	},
+	"3107": {	
+		"deliveryCentre": "TEMPLESTOWE DC",
+		"shippingOption": "standard"
+	},
+	"3108": {	
+		"deliveryCentre": "TEMPLESTOWE DC",
+		"shippingOption": "standard"
+	},
+	"3109": {	
+		"deliveryCentre": "TEMPLESTOWE DC",
+		"shippingOption": "standard"
+	},
+	"3111": {	
+		"deliveryCentre": "TEMPLESTOWE DC",
+		"shippingOption": "standard"
+	},
+	"3121": {	
+		"deliveryCentre": "RICHMOND DC",
+		"shippingOption": "standard"
+	},
+	"3124": {	
+		"deliveryCentre": "DEEPDENE DC",
+		"shippingOption": "standard"
+	},
+	"3125": {	
+		"deliveryCentre": "BURWOOD DC",
+		"shippingOption": "standard"
+	},
+	"3126": {	
+		"deliveryCentre": "DEEPDENE DC",
+		"shippingOption": "standard"
+	},
+	"3127": {	
+		"deliveryCentre": "BOX HILL DC",
+		"shippingOption": "standard"
+	},
+	"3128": {	
+		"deliveryCentre": "BOX HILL DC",
+		"shippingOption": "standard"
+	},
+	"3129": {	
+		"deliveryCentre": "BOX HILL DC",
+		"shippingOption": "standard"
+	},
+	"3141": {	
+		"deliveryCentre": "RICHMOND DC",
+		"shippingOption": "standard"
+	},
+	"3142": {	
+		"deliveryCentre": "RICHMOND DC",
+		"shippingOption": "standard"
+	},
+	"3145": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3146": {	
+		"deliveryCentre": "BURWOOD DC",
+		"shippingOption": "standard"
+	},
+	"3147": {	
+		"deliveryCentre": "BURWOOD DC",
+		"shippingOption": "standard"
+	},
+	"3148": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3149": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3150": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3151": {	
+		"deliveryCentre": "BURWOOD DC",
+		"shippingOption": "standard"
+	},
+	"3152": {	
+		"deliveryCentre": "FERNTREE GULLY DELIVERY CENTRE",
+		"shippingOption": "remote"
+	},
+	"3153": {	
+		"deliveryCentre": "BAYSWATER DC",
+		"shippingOption": "standard"
+	},
+	"3154": {	
+		"deliveryCentre": "BAYSWATER DC",
+		"shippingOption": "standard"
+	},
+	"3155": {	
+		"deliveryCentre": "BAYSWATER DC",
+		"shippingOption": "standard"
+	},
+	"3156": {	
+		"deliveryCentre": "FERNTREE GULLY DELIVERY CENTRE",
+		"shippingOption": "remote"
+	},
+	"3158": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3159": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3160": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3161": {	
+		"deliveryCentre": "BENTLEIGH EAST DC",
+		"shippingOption": "standard"
+	},
+	"3162": {	
+		"deliveryCentre": "BENTLEIGH EAST DC",
+		"shippingOption": "standard"
+	},
+	"3163": {	
+		"deliveryCentre": "BENTLEIGH EAST DC",
+		"shippingOption": "standard"
+	},
+	"3164": {	
+		"deliveryCentre": "DANDENONG SOUTH BC",
+		"shippingOption": "remote"
+	},
+	"3165": {	
+		"deliveryCentre": "BENTLEIGH EAST DC",
+		"shippingOption": "standard"
+	},
+	"3166": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3167": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3168": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3169": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3170": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3171": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3172": {	
+		"deliveryCentre": "BRAESIDE DC",
+		"shippingOption": "standard"
+	},
+	"3173": {	
+		"deliveryCentre": "BRAESIDE DC",
+		"shippingOption": "standard"
+	},
+	"3174": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3175": {	
+		"deliveryCentre": "DANDENONG DC",
+		"shippingOption": "remote"
+	},
+	"3177": {	
+		"deliveryCentre": "DANDENONG DC",
+		"shippingOption": "remote"
+	},
+	"3178": {	
+		"deliveryCentre": "FERNTREE GULLY DELIVERY CENTRE",
+		"shippingOption": "remote"
+	},
+	"3179": {	
+		"deliveryCentre": "FERNTREE GULLY DELIVERY CENTRE",
+		"shippingOption": "remote"
+	},
+	"3180": {	
+		"deliveryCentre": "FERNTREE GULLY DELIVERY CENTRE",
+		"shippingOption": "remote"
+	},
+	"3181": {	
+		"deliveryCentre": "RICHMOND DC",
+		"shippingOption": "standard"
+	},
+	"3182": {	
+		"deliveryCentre": "ST KILDA DC",
+		"shippingOption": "standard"
+	},
+	"3183": {	
+		"deliveryCentre": "ST KILDA DC",
+		"shippingOption": "standard"
+	},
+	"3184": {	
+		"deliveryCentre": "ST KILDA DC",
+		"shippingOption": "standard"
+	},
+	"3185": {	
+		"deliveryCentre": "ST KILDA DC",
+		"shippingOption": "standard"
+	},
+	"3186": {	
+		"deliveryCentre": "BRIGHTON DC",
+		"shippingOption": "standard"
+	},
+	"3187": {	
+		"deliveryCentre": "BRIGHTON DC",
+		"shippingOption": "standard"
+	},
+	"3194": {	
+		"deliveryCentre": "BRAESIDE DC",
+		"shippingOption": "standard"
+	},
+	"3195": {	
+		"deliveryCentre": "BRAESIDE DC",
+		"shippingOption": "standard"
+	},
+	"3196": {	
+		"deliveryCentre": "BRAESIDE DC",
+		"shippingOption": "standard"
+	},
+	"3205": {	
+		"deliveryCentre": "SOUTH MELBOURNE DC",
+		"shippingOption": "standard"
+	},
+	"3206": {	
+		"deliveryCentre": "SOUTH MELBOURNE DC",
+		"shippingOption": "standard"
+	},
+	"3207": {	
+		"deliveryCentre": "SOUTH MELBOURNE DC",
+		"shippingOption": "standard"
+	},
+	"3335": {	
+		"deliveryCentre": "MELTON DELIVERY",
+		"shippingOption": "standard"
+	},
+	"3337": {	
+		"deliveryCentre": "MELTON DELIVERY",
+		"shippingOption": "standard"
+	},
+	"3338": {	
+		"deliveryCentre": "MELTON DELIVERY",
+		"shippingOption": "standard"
+	},
+	"3782": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3783": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3785": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3786": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3787": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3788": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3789": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3791": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3792": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3793": {	
+		"deliveryCentre": "BELGRAVE DELIVERY CENTRE",
+		"shippingOption": "standard"
+	},
+	"3800": {	
+		"deliveryCentre": "MOUNT WAVERLEY MDC (NEW)",
+		"shippingOption": "standard"
+	},
+	"3802": {	
+		"deliveryCentre": "DANDENONG DC",
+		"shippingOption": "remote"
+	},
+	"3803": {	
+		"deliveryCentre": "DANDENONG DC",
+		"shippingOption": "remote"
+	},
+	"3804": {	
+		"deliveryCentre": "NARRE WARREN DC",
+		"shippingOption": "standard"
+	},
+	"3805": {	
+		"deliveryCentre": "NARRE WARREN DC",
+		"shippingOption": "standard"
+	},
+	"3806": {	
+		"deliveryCentre": "NARRE WARREN DC",
+		"shippingOption": "standard"
+	},
+	"3807": {	
+		"deliveryCentre": "NARRE WARREN DC",
+		"shippingOption": "standard"
+	},
+	"3910": {	
+		"deliveryCentre": "CRANBOURNE DC",
+		"shippingOption": "standard"
+	},
+	"3912": {	
+		"deliveryCentre": "SOMERVILLE DC",
+		"shippingOption": "standard"
+	},
+	"3975": {	
+		"deliveryCentre": "CRANBOURNE DC",
+		"shippingOption": "standard"
+	},
+	"3976": {	
+		"deliveryCentre": "CRANBOURNE DC",
+		"shippingOption": "standard"
+	},
+	"3977": {	
+		"deliveryCentre": "CRANBOURNE DC",
+		"shippingOption": "standard"
+	}
+}
