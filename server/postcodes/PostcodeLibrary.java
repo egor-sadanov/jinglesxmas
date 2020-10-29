@@ -26,18 +26,19 @@ public class PostcodeLibrary {
 				String[] tuples = line.split(",");
 	
 				String postcode = tuples[0].trim();
-				String dc = tuples[3].trim();
 
-				String shippingOption = "";
-				if (dc.toLowerCase().contains("city"))
-					shippingOption = "cbd";
-				else if (dc.toLowerCase().contains("dandenong") ||
-								dc.toLowerCase().contains("ferntree gully"))
-					shippingOption = "remote";
-				else 
-					shippingOption = "standard";
+				String zone = "";
+				switch(tuples[7].trim()) {
+					case "N": zone = "north"; break;
+					case "S": zone = "south"; break;
+					case "W": zone = "west"; break;
+					case "E": zone = "east"; break;
+					case "C": zone = "center"; break;
+					default: break;
+				}
+				boolean surcharge = tuples[8].trim().equals("1") ? true:false;
 
-				postcodeLibrary.put(postcode, new DeliveryCentre(dc, shippingOption));
+				postcodeLibrary.put(postcode, new DeliveryCentre(zone, surcharge));
 			}
 			rd.close();
 		} catch(FileNotFoundException e) {

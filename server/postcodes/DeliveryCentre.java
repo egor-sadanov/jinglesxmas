@@ -3,23 +3,27 @@
 */
 
 public class DeliveryCentre {
-	private String deliveryCentre;
-	private String shippingOption;
+	private String deliveryZone;
+	private boolean surcharge;
 
-	public DeliveryCentre (String deliveryCentre, String shippingOption) {
-		this.deliveryCentre = deliveryCentre;
-		this.shippingOption = shippingOption;
+	// private String deliveryCentre;
+	// private String latitude;
+	// private String longtitude;
+
+	public DeliveryCentre(String deliveryZone, boolean surcharge) {
+		this.deliveryZone = deliveryZone;
+		this.surcharge = surcharge;
 	}
 
-	public void setShippingSurcharge (String shippingOption) {
-		this.shippingOption = shippingOption;
+	public void setShippingSurcharge (boolean surcharge) {
+		this.surcharge = surcharge;
 	}
-	
+
 	public String toJsonString() {
 		return 
 		"{\t\n" + 
-		"\t\t\"deliveryCentre\": \"" + deliveryCentre + "\",\n" + 
-		"\t\t\"shippingOption\": \"" + shippingOption + "\"\n" + 
+		"\t\t\"deliveryZone\": \"" + deliveryZone + "\",\n" + 
+		"\t\t\"surcharge\": " + surcharge + "\n" + 
 		"\t}";
 	}
 }
