@@ -186,20 +186,25 @@ class Store {
     }
     // Add the subtotal, shipping cost and total to the payment summary.
     const total = this.formatPrice(this.getPaymentTotal(), currency);
+    const shippingCost = this.getShippingCost();
     orderTotal.querySelector('[data-subtotal]').innerText = total;
-    orderTotal.querySelector('[shipping-total]').innerText = this.formatPrice(this.getShippingCost(), currency);
-    orderTotal.querySelector('[data-total]').innerText = this.formatPrice(this.getPaymentTotal() + this.getShippingCost(), currency);
+    orderTotal.querySelector('[shipping-total]').innerText = this.formatPrice(shippingCost, currency);
+    orderTotal.querySelector('[data-total]').innerText = this.formatPrice(this.getPaymentTotal() + shippingCost, currency);
   }
-  getShippingCost(shippingCost) {
-    return 2500;
+
+  getShippingCost() {
+    const response = await fetch('/shippingCost');
+    const shippingCost = await response.json();
+    return shippingCost;
   }
-  updateTotalLabelText(shippingCost) {
-    const orderTotal = document.getElementById('order-total');
-    // currency hard-coded for only testing purposes
-    // review this implementation on build version
-    orderTotal.querySelector('[shipping-total]').innerText = this.formatPrice(shippingCost, 'aud');          
-    orderTotal.querySelector('[data-total]').innerText = this.formatPrice(this.getPaymentTotal() + shippingCost, 'aud');
-  }
+  
+  // updateTotalLabelText(shippingCost) {
+  //   const orderTotal = document.getElementById('order-total');
+  //   // currency hard-coded for only testing purposes
+  //   // review this implementation on build version
+  //   orderTotal.querySelector('[shipping-total]').innerText = this.formatPrice(shippingCost, 'aud');          
+  //   orderTotal.querySelector('[data-total]').innerText = this.formatPrice(this.getPaymentTotal() + shippingCost, 'aud');
+  // }
 }
 
 window.store = new Store();

@@ -30,22 +30,28 @@ module.exports = {
   // Shipping options for the Payment Request API.
   shippingOptions: [
     {
-      id: 'standard',
-      label: 'Standard Shipping',
-      detail: 'Weekdays and Weekends',
+      id: 'weekdayStandard',
+      label: 'Free Shipping',
+      detail: 'Weekdays',
+      amount: 0,
+    },
+    {
+      id: 'weekendStandard',
+      label: 'Weekend surcharge',
+      detail: 'Weekends',
       amount: 2500,
     },
     {
-      id: 'remote',
-      label: 'Remote Suburbs Shipping',
-      detail: 'Weekdays and Weekends',
-      amount: 3500,
+      id: 'weekdayWithSurcharge',
+      label: 'CBD and remote suburbs',
+      detail: 'Weekdays',
+      amount: 2000,
     },
     {
-      id: 'cbd',
-      label: 'CBD Shipping',
-      detail: 'Weekdays and Weekends',
-      amount: 5000,
+      id: 'weekendWithSurcharge',
+      label: 'CBD and remote suburbs',
+      detail: 'Weekends',
+      amount: 4500,
     }
   ],
 
