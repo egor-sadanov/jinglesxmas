@@ -13,6 +13,7 @@
 const config = require('./config');
 const {products} = require('./inventory');
 const postcodes = require('../postcodes/postcodes.json');
+const deliveryDates = require('../postcodes/deliveryDates.json');
 const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(config.stripe.secretKey);
@@ -23,11 +24,41 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
+// Get delivery dates
+router.get('/delivery-dates/:postcode', async (req, res) => {
+  try {
+    let postcode = parseInt(req.params.postcode);
+    let deliveryZone = postcodes[postcode].deliveryZone;
+    let dates = deliveryDates[deliveryZone];
+
+    return res.status(200).json(dates);
+  } catch (err) {
+    // handle error in the future implementation
+    // for now simply return standard shipping cost
+    // let message = "Invalid postcode. " + err.message;
+    // return res.status(404).json({error: message});
+    return res.json(['2020-12-24', '2020-12-24']);
+  }
+});
+
 // Collect data from submit form and render checkout page
 router.post('/checkout', async (req, res) => {
-  req.session.postcode = req.body.postal_code;
-  req.session.shippingDate = req.body.date;
+  const postcode = parseInt(req.body.postal_code);
+  const deliveryDate = "2020-12-" + req.body.deliveryDay;
+  const weekendSurcharge = req.body.weekendSurcharge;
+  const areaSurcharge = req.body.areaSurcharge;
+  
+  const shippingOption = "weekdayStandard";
+  if (weekendSurcharge && areaSurcharge)
+    shippingOption = "weekendWithSurcharge";
+  else if (areaSurcharge)
+    shippingOption = "weekdayWithSurcharge";
+  else if (weekendSurcharge)
+    shippingOption = "weekendStandard";
 
+  req.session.shippingOption = products.getShippingCost(shippingOption);
+  req.session.deliveryDate = deliveryDate;
+  req.session.postcode = postcode;
   if (!req.body.add_ons) {
     req.session.ids = [req.body.tree];
   } else if (typeof req.body.add_ons === 'string' || req.body.add_ons instanceof String ) {
@@ -86,10 +117,17 @@ router.get('/shippingOption/:postcode', async (req, res) => {
   }
 });
 
+// get shipping cost
+router.get('/shippingCost', (req, res) => {
+  const shippingCost = products.getShippingCost(req.session.shippingOption);
+  return res.json(shippingCost);
+});
+
 // Create the PaymentIntent on the backend.
 router.post('/payment_intents', async (req, res, next) => {
   let {currency, items} = req.body;
   const amount = await calculatePaymentAmount(items);
+  amount += products.getShippingCost(req.session.shippingOption);
 
   // prepare metadata for paymentIntent 
   const metadata = {};
@@ -98,7 +136,7 @@ router.post('/payment_intents', async (req, res, next) => {
     productName = "product_" + (i + 1);
     metadata[productName] = req.session.ids[i]
   }
-  metadata.shippingDate = req.session.shippingDate;
+  metadata.deliveryDate = req.session.deliveryDate;
   
   try {
     const paymentIntent = await stripe.paymentIntents.create({

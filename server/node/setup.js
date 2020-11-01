@@ -16,57 +16,51 @@ stripe.setApiVersion(config.stripe.apiVersion);
 // Replace this list with information about your store's products.
 const products = [
   {
-    id: 'tree_6',
+    id: 'standard',
     name: 'Tree 6',
-    price: 89,
+    price: 10900,
     attributes: { issue: 'Fresh pine tree from Daylesford', 'size' : '6', addon : false}
   },
   {
-    id: 'tree_7',
+    id: 'large',
     name: 'Tree 7',
-    price: 139,
+    price: 13900,
     attributes: {issue: 'Fresh pine tree from Daylesford', 'size' : '7', addon : false}
-  },
-  {
-    id: 'tree_8',
-    name: 'Tree 8',
-    price: 139,
-    attributes: {issue: 'Fresh pine tree from Daylesford', 'size' : '8', addon : false}
   },
   {
     id: 'stand_std',
     name: 'Cinco Stand',
-    price: 49,
+    price: 4900,
     attributes: {issue: 'Made in USA', size: 'Standard',  'material' : 'polystyrene', addon : true}
   },
   {
     id: 'stand_lrg',
     name: 'Large Cinco Stand',
-    price: 69,
+    price: 6900,
     attributes: {issue: 'Made in USA', size: 'Standard', 'material' : 'polystyrene', addon : true}
   },
   {
     id: 'installation',
     name: 'Tree Installtion',
-    price: 15,
+    price: 1500,
     attributes: {set: 'Add on'}
   },
   {
-    id: 'removal',
+    id: 'disposal',
     name: 'Tree Disposal',
-    price: 15,
+    price: 1500,
     attributes: {set: 'Add on'}
   },
   {
     id: 'preservative',
     name: 'Tree Preservative',
-    price: 5,
+    price: 500,
     attributes: {set: 'Add on'}
   },
   {
     id: 'watering',
     name: 'Watering Kit',
-    price: 15,
+    price: 1500,
     attributes: {set: 'Add on'}
   }
 ];
