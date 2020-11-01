@@ -69,7 +69,7 @@ class Store {
   loadProducts() {
     if (!this.productsFetchPromise) {
       this.productsFetchPromise = new Promise(async resolve => {
-        const productsResponse = await fetch('/products');
+        const productsResponse = await fetch('/products');  
         const products = (await productsResponse.json()).data;
         if (!products.length) {
           throw new Error(
@@ -97,7 +97,7 @@ class Store {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           currency,
-          items,
+          items
         }),
       });
       const data = await response.json();
@@ -162,11 +162,6 @@ class Store {
     let currency;
     // Build and append the line items to the payment summary.
     for (let [id, product] of Object.entries(this.products)) {
-      const randomQuantity = (min, max) => {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-      };
       const quantity = 1;
       let sku = product.skus.data[0];
       let skuPrice = this.formatPrice(sku.price, sku.currency);
@@ -178,7 +173,6 @@ class Store {
         <div class="label">
           <p class="product">${product.name}</p>
           <p class="sku">${product.description}</p>
-          
         </div>
         <p class="count">${quantity} x ${skuPrice}</p>
         <p class="price">${lineItemPrice}</p>`;
@@ -190,10 +184,21 @@ class Store {
         quantity,
       });
     }
-    // Add the subtotal and total to the payment summary.
+    // Add the subtotal, shipping cost and total to the payment summary.
     const total = this.formatPrice(this.getPaymentTotal(), currency);
     orderTotal.querySelector('[data-subtotal]').innerText = total;
-    orderTotal.querySelector('[data-total]').innerText = total;
+    orderTotal.querySelector('[shipping-total]').innerText = this.formatPrice(this.getShippingCost(), currency);
+    orderTotal.querySelector('[data-total]').innerText = this.formatPrice(this.getPaymentTotal() + this.getShippingCost(), currency);
+  }
+  getShippingCost(shippingCost) {
+    return 2500;
+  }
+  updateTotalLabelText(shippingCost) {
+    const orderTotal = document.getElementById('order-total');
+    // currency hard-coded for only testing purposes
+    // review this implementation on build version
+    orderTotal.querySelector('[shipping-total]').innerText = this.formatPrice(shippingCost, 'aud');          
+    orderTotal.querySelector('[data-total]').innerText = this.formatPrice(this.getPaymentTotal() + shippingCost, 'aud');
   }
 }
 

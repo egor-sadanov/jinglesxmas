@@ -37,7 +37,6 @@ router.use('/auth/logout', (req, res) => {
     res.redirect('/');
 });
 
-
 // Render Checkoout page.
 router.post('/checkout', (req, res) => {
   //res.render('checkout.html');
@@ -47,7 +46,6 @@ router.post('/checkout', (req, res) => {
 // Render Terms and conditions.
 router.get('/terms', (req, res) => {
   res.sendFile(path.join(__dirname, '../../public', 'terms.html'));
-
 });
 
 // Render the main app HTML.
