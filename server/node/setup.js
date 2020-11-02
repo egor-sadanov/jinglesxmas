@@ -28,21 +28,27 @@ const products = [
     attributes: {issue: 'Fresh pine tree from Daylesford', 'size' : '7', addon : false}
   },
   {
-    id: 'stand_std',
+    id: 'cincostand',
     name: 'Cinco Stand',
-    price: 4900,
+    price: 4500,
     attributes: {issue: 'Made in USA', size: 'Standard',  'material' : 'polystyrene', addon : true}
   },
   {
-    id: 'stand_lrg',
+    id: 'largecincostand',
     name: 'Large Cinco Stand',
-    price: 6900,
+    price: 6000,
     attributes: {issue: 'Made in USA', size: 'Standard', 'material' : 'polystyrene', addon : true}
   },
   {
     id: 'installation',
     name: 'Tree Installtion',
-    price: 1500,
+    price: 2000,
+    attributes: {set: 'Add on'}
+  },
+  {
+    id: 'wateringkit',
+    name: 'Watering Kit',
+    price: 2500,
     attributes: {set: 'Add on'}
   },
   {
@@ -55,12 +61,6 @@ const products = [
     id: 'preservative',
     name: 'Tree Preservative',
     price: 500,
-    attributes: {set: 'Add on'}
-  },
-  {
-    id: 'watering',
-    name: 'Watering Kit',
-    price: 1500,
     attributes: {set: 'Add on'}
   }
 ];
