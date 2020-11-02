@@ -140,6 +140,35 @@ class Store {
     }
   }
 
+  // Update  PaymentIntent with the coupon discount.
+  async updatePaymentIntentWithCoupon(
+    paymentIntent,
+    items,
+    coupon
+  ) {
+    try {
+      const response = await fetch(
+        `/payment_intents/${paymentIntent}/coupon`,
+        {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            coupon,
+            items,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (data.error) {
+        return {error: data.error};
+      } else {
+        return data;
+      }
+    } catch (err) {
+      return {error: err.message};
+    }
+  }
+
   // Format a price (assuming a two-decimal currency like EUR or USD for simplicity).
   formatPrice(amount, currency) {
     let price = (amount / 100).toFixed(2);
@@ -185,26 +214,33 @@ class Store {
       });
     }
     // Add the subtotal, shipping cost and total to the payment summary.
-    const total = this.formatPrice(this.getPaymentTotal(), currency);
-    const shippingCost = this.getShippingCost();
-    orderTotal.querySelector('[data-subtotal]').innerText = total;
-    orderTotal.querySelector('[shipping-total]').innerText = this.formatPrice(shippingCost, currency);
-    orderTotal.querySelector('[data-total]').innerText = this.formatPrice(this.getPaymentTotal() + shippingCost, currency);
+    const subtotal = this.formatPrice(this.getPaymentTotal(), currency);
+    const shippingCost = await this.getShippingCost();
+    orderTotal.querySelector('[data-subtotal]').innerText = subtotal;
+    if (shippingCost === 0) {
+      orderTotal.querySelector('[shipping-total]').innerText = 'Free';
+      orderTotal.querySelector('[data-total]').innerText = subtotal;
+    } else {
+      orderTotal.querySelector('[shipping-total]').innerText = this.formatPrice(shippingCost, currency);
+      orderTotal.querySelector('[data-total]').innerText = this.formatPrice(this.getPaymentTotal() + shippingCost, currency);
+    }
   }
 
-  getShippingCost() {
-    const response = await fetch('/shippingCost');
-    const shippingCost = await response.json();
-    return shippingCost;
+  async getShippingCost() {
+    const response = await fetch('/shipping-cost');
+    return await response.json();
   }
   
-  // updateTotalLabelText(shippingCost) {
-  //   const orderTotal = document.getElementById('order-total');
-  //   // currency hard-coded for only testing purposes
-  //   // review this implementation on build version
-  //   orderTotal.querySelector('[shipping-total]').innerText = this.formatPrice(shippingCost, 'aud');          
-  //   orderTotal.querySelector('[data-total]').innerText = this.formatPrice(this.getPaymentTotal() + shippingCost, 'aud');
-  // }
+  // update order total label after successfull application of coupon
+  async updateTotalLabelText(cost, currency) {
+    const orderTotal = document.getElementById('order-total');
+    const shippingCost = await this.getShippingCost();
+
+    // subsctract shippingCost because it comes from paymentIntent amount which includes cost for shipping
+    const total = this.formatPrice(cost - shippingCost, currency);
+    orderTotal.querySelector('[data-subtotal]').innerText = total;
+    orderTotal.querySelector('[data-total]').innerText = this.formatPrice(cost, currency);
+  }
 }
 
 window.store = new Store();
