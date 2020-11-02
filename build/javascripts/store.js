@@ -69,7 +69,7 @@ class Store {
   loadProducts() {
     if (!this.productsFetchPromise) {
       this.productsFetchPromise = new Promise(async resolve => {
-        const productsResponse = await fetch('/products');
+        const productsResponse = await fetch('/products');  
         const products = (await productsResponse.json()).data;
         if (!products.length) {
           throw new Error(
@@ -97,7 +97,7 @@ class Store {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           currency,
-          items,
+          items
         }),
       });
       const data = await response.json();
@@ -140,6 +140,35 @@ class Store {
     }
   }
 
+  // Update  PaymentIntent with the coupon discount.
+  async updatePaymentIntentWithCoupon(
+    paymentIntent,
+    items,
+    coupon
+  ) {
+    try {
+      const response = await fetch(
+        `/payment_intents/${paymentIntent}/coupon`,
+        {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            coupon,
+            items,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (data.error) {
+        return {error: data.error};
+      } else {
+        return data;
+      }
+    } catch (err) {
+      return {error: err.message};
+    }
+  }
+
   // Format a price (assuming a two-decimal currency like EUR or USD for simplicity).
   formatPrice(amount, currency) {
     let price = (amount / 100).toFixed(2);
@@ -162,11 +191,6 @@ class Store {
     let currency;
     // Build and append the line items to the payment summary.
     for (let [id, product] of Object.entries(this.products)) {
-      const randomQuantity = (min, max) => {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-      };
       const quantity = 1;
       let sku = product.skus.data[0];
       let skuPrice = this.formatPrice(sku.price, sku.currency);
@@ -178,7 +202,6 @@ class Store {
         <div class="label">
           <p class="product">${product.name}</p>
           <p class="sku">${product.description}</p>
-          
         </div>
         <p class="count">${quantity} x ${skuPrice}</p>
         <p class="price">${lineItemPrice}</p>`;
@@ -190,10 +213,32 @@ class Store {
         quantity,
       });
     }
-    // Add the subtotal and total to the payment summary.
-    const total = this.formatPrice(this.getPaymentTotal(), currency);
+    // Add the subtotal, shipping cost and total to the payment summary.
+    const subtotal = this.formatPrice(this.getPaymentTotal(), currency);
+    const shippingCost = await this.getShippingCost();
+    orderTotal.querySelector('[data-subtotal]').innerText = subtotal;
+    if (shippingCost === 0) {
+      orderTotal.querySelector('[shipping-total]').innerText = 'Free';
+      orderTotal.querySelector('[data-total]').innerText = subtotal;
+    } else {
+      orderTotal.querySelector('[shipping-total]').innerText = this.formatPrice(shippingCost, currency);
+      orderTotal.querySelector('[data-total]').innerText = this.formatPrice(this.getPaymentTotal() + shippingCost, currency);
+    }
+  }
+
+  async getShippingCost() {
+    const response = await fetch('/shipping-cost');
+    return await response.json();
+  }
+  
+  async updateTotalLabelText(cost, currency) {
+    const orderTotal = document.getElementById('order-total');
+    const shippingCost = await this.getShippingCost();
+
+    // subsctract shippingCost because it comes from paymentIntent amount which includes cost for shipping
+    const total = this.formatPrice(cost - shippingCost, currency);
     orderTotal.querySelector('[data-subtotal]').innerText = total;
-    orderTotal.querySelector('[data-total]').innerText = total;
+    orderTotal.querySelector('[data-total]').innerText = this.formatPrice(cost, currency);
   }
 }
 

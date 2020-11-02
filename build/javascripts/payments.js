@@ -153,7 +153,6 @@
     },
     requestShipping: true,
     requestPayerEmail: true,
-    shippingOptions: config.shippingOptions,
   });
 
   // Callback when a payment method is created.
@@ -222,9 +221,8 @@
 
   // Create the Payment Request Button.
   const paymentRequestButton = elements.create('paymentRequestButton', {
-    paymentRequest,
+    paymentRequest: paymentRequest,
   });
-
   // Check if the Payment Request is available (or Apple Pay on the Web).
   const paymentRequestSupport = await paymentRequest.canMakePayment();
   if (paymentRequestSupport) {
@@ -248,26 +246,37 @@
    */
 
   // Listen to changes to the user-selected country.
+  // form
+  //   .querySelector('select[name=country]')
+  //   .addEventListener('change', (event) => {
+  //     event.preventDefault();
+  //     selectCountry(event.target.value);
+  //   });
+
+  // Check if user has prompted coupon code.
   form
-    .querySelector('select[name=country]')
+    .querySelector('input[name=coupon]')
     .addEventListener('change', (event) => {
       event.preventDefault();
-      selectCountry(event.target.value);
+      updatePaymentIntentWithCoupon(event.target.value);
     });
 
   // Submit handler for our payment form.
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-
+    
     // Retrieve the user information from the form.
     const payment = form.querySelector('input[name=payment]:checked').value;
     const name = form.querySelector('input[name=name]').value;
-    const country = form.querySelector('select[name=country] option:checked')
-      .value;
+    const phone = form.querySelector('input[name=phone]').value;
+    const country = form.querySelector('option[name=country]').value;
     const email = form.querySelector('input[name=email]').value;
     const billingAddress = {
       line1: form.querySelector('input[name=address]').value,
+      city: form.querySelector('input[name=city]').value,
+      state: form.querySelector('input[name=state]').value,
       postal_code: form.querySelector('input[name=postal_code]').value,
+      country,
     };
     const shipping = {
       name,
@@ -279,6 +288,7 @@
         country,
       },
     };
+
     // Disable the Pay button to prevent multiple click events.
     submitButton.disabled = true;
     submitButton.textContent = 'Processing…';
@@ -292,11 +302,14 @@
             card,
             billing_details: {
               name,
+              email,
+              phone,
               address: billingAddress,
             },
           },
           shipping,
-        }
+         },
+        {handleActions: false}
       );
       handlePayment(response);
     } else if (payment === 'sepa_debit') {
@@ -651,11 +664,10 @@
   } else {
     // Update the interface to display the checkout form.
     mainElement.classList.add('checkout');
-
     // Create the PaymentIntent with the cart details.
     const response = await store.createPaymentIntent(
       config.currency,
-      store.getLineItems()
+      store.getLineItems(),
     );
     paymentIntent = response.paymentIntent;
   }
@@ -773,8 +785,9 @@
   };
 
   // Update the main button to reflect the payment method being selected.
-  const updateButtonLabel = (paymentMethod, bankName) => {
-    let amount = store.formatPrice(store.getPaymentTotal(), config.currency);
+  const updateButtonLabel = async (paymentMethod, bankName) => {
+    let shippingCost = await store.getShippingCost();
+    let amount = store.formatPrice(store.getPaymentTotal() + shippingCost, config.currency);
     let name = paymentMethods[paymentMethod].name;
     let label = `Pay ${amount}`;
     if (paymentMethod !== 'card') {
@@ -791,7 +804,7 @@
 
   const selectCountry = (country) => {
     const selector = document.getElementById('country');
-    selector.querySelector(`option[value=${country}]`).selected = 'selected';
+    selector.querySelector(`option[value=${country}]`);
     selector.className = `field ${country.toLowerCase()}`;
 
     // Trigger the methods to show relevant fields and payment methods on page load.
@@ -802,7 +815,7 @@
   // Show only form fields that are relevant to the selected country.
   const showRelevantFormFields = (country) => {
     if (!country) {
-      country = form.querySelector('select[name=country] option:checked').value;
+      country = form.querySelector('option[name=country]').value;
     }
     const zipLabel = form.querySelector('label.zip');
     // Only show the state input for the United States.
@@ -850,7 +863,7 @@
   // Show only the payment methods that are relevant to the selected country.
   const showRelevantPaymentMethods = (country) => {
     if (!country) {
-      country = form.querySelector('select[name=country] option:checked').value;
+      country = form.querySelector('option[name=country]').value;
     }
     const paymentInputs = form.querySelectorAll('input[name=payment]');
     for (let i = 0; i < paymentInputs.length; i++) {
@@ -879,6 +892,34 @@
     form.querySelector('.payment-info.wechat').classList.remove('visible');
     form.querySelector('.payment-info.redirect').classList.remove('visible');
     updateButtonLabel(paymentInputs[0].value);
+  };
+
+  // Retrieve the postcode from the stored session.
+  const pastePostcode = async () => {
+    const response = await fetch('/postcode');
+    const postcode = await response.json();
+    form.querySelector('input[name=postal_code]').value = postcode;
+  }
+
+  // Update paymentIntent when the user prompts coupon
+  const updatePaymentIntentWithCoupon = async (couponCode) => {
+    const response =  await store.updatePaymentIntentWithCoupon(
+      paymentIntent.id,
+      store.getLineItems(),
+      couponCode
+    );
+    paymentRequest.update({
+      total: {
+        label: 'Total',
+        amount: response.paymentIntent.amount,
+      },
+    });
+    await store.updateTotalLabelText(response.paymentIntent.amount, config.currency);
+    const amount = store.formatPrice(
+      response.paymentIntent.amount,
+      config.currency
+    );
+    updateSubmitButtonPayText(`Pay ${amount}`);
   };
 
   // Listen to changes to the payment method selector.
@@ -927,4 +968,5 @@
     country = countryParam;
   }
   selectCountry(country);
+  pastePostcode();
 })();

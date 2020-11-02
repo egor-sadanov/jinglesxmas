@@ -27,7 +27,7 @@
       </div>
       <form id="payment-form" method="POST" action="/orders">
         <p class="instruction"><span>Complete your shipping and payment details below</p>
-          <section>
+        <section>
           <h2>Payment Information</h2>
           <nav id="payment-methods">
             <ul>
@@ -83,7 +83,6 @@
             <p class="notice">Click the button below to generate a QR code for WeChat.</p>
           </div>
         </section>
-
         <section>
           <h2>Shipping &amp; Billing Information</h2>
           <fieldset class="with-state">
@@ -91,7 +90,6 @@
               <span>Name</span>
               <input name="name" class="field" placeholder="Jenny Rosen" required>
             </label>
-            
             <label>
               <span>Address</span>
               <input name="address" class="field" placeholder="1970 ACDC Lane">
@@ -102,37 +100,39 @@
             </label>
             <label class="state">
               <span>State</span>
-              <input name="state" class="field" placeholder="VIC">
+              <input name="state" class="field" value="VIC" readonly>
             </label>
             <label class="zip">
               <span>Postcode</span>
-              <input name="postal_code" class="field" placeholder="3000" maxlength="4">
+              <input name="postal_code" class="field" placeholder="3000" maxlength="4" readonly>
             </label>
-             <label class="select" >
+             <label>
               <span>Country</span>
               <div id="country" class="field au">                
-               <select name="country" >
-                  <option value="AU" selected="selected">Australia</option>
-                </select>
+                <option value="AU" name="country">Australia</option>
               </div>
             </label>
-
           </fieldset>
           <h2>Contact Details</h2>
           <fieldset>
-
-              <label>
-                
-                <span>Phone</span>
-                <div id="phone" class="field" placeholder="3000" maxlength="4"></div>
-              </label>
-              <label>
+            <label>
+              <span>Phone</span>
+              <input name="phone" type="phone" id="phone" class="field" placeholder="3000" maxlength="11" required></input>
+            </label>
+            <label>
               <span>Email</span>
               <input name="email" type="email" class="field" placeholder="alex@example.com" required>
             </label>
-            </fieldset>
+          </fieldset>
+          <h2>Coupon</h2>
+          <fieldset>
+            <label>
+              <span>Coupon</span>
+              <input name="coupon" type="text" id="phone" class="field" placeholder="XXXX"></input>
+            </label>
+          </fieldset>
         </section>
-               <button class="payment-button" type="submit">Pay</button> 
+        <button class="payment-button" type="submit">Pay</button> 
       </form>
       <div id="card-errors" class="element-errors"></div>
       <div id="iban-errors" class="element-errors"></div>
@@ -173,7 +173,7 @@
       </div>
       <div class="line-item shipping">
         <p class="label">Shipping</p>
-        <p class="price">Free</p>
+        <p class="price" shipping-total></p>
       </div>
       <div class="line-item demo">
         <div id="demo">
@@ -205,10 +205,7 @@
   <script src="https://js.stripe.com/v3/"></script>
   <!-- Library to render QR codes -->
   <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js" integrity="sha384-3zSEDfvllQohrq0PHL1fOXJuC/jSOO34H46t6UQfobFOmxE5BpjjaIJY5F2/bMnU" crossorigin="anonymous"></script>
-  <!-- Library for generating fake user information -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js" integrity="sha384-PlFzuf6GOlJNxLuosezJ/jwndIVZ2hWI/AmvYQtBzstOdLtcUe6DPSI4LsqwiN1y" crossorigin="anonymous"></script>
   <!-- App -->
-  <script src="/javascripts/generate.js"></script>
   <script src="/javascripts/store.js"></script>
   <script src="/javascripts/payments.js"></script>
   <script src="https://kit.fontawesome.com/6c8e0e0e57.js" crossorigin="anonymous"></script>
