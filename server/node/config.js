@@ -45,13 +45,13 @@ module.exports = {
       id: 'weekdayWithSurcharge',
       label: 'CBD and remote suburbs',
       detail: 'Weekdays',
-      amount: 2000,
+      amount: 2500,
     },
     {
       id: 'weekendWithSurcharge',
       label: 'CBD and remote suburbs',
       detail: 'Weekends',
-      amount: 4500,
+      amount: 5000,
     }
   ],
 
