@@ -12,10 +12,10 @@
 
 const config = require('./config');
 const {products} = require('./inventory');
-const postcodes = require('../postcodes/postcodes.json');
-const deliveryDates = require('../postcodes/deliveryDates.json');
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+
 const stripe = require('stripe')(config.stripe.secretKey);
 stripe.setApiVersion(config.stripe.apiVersion);
 
@@ -24,31 +24,14 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-// Get delivery dates
-router.get('/delivery-dates/:postcode', async (req, res) => {
-  try {
-    let postcode = parseInt(req.params.postcode);
-    let deliveryZone = postcodes[postcode].deliveryZone;
-    let dates = deliveryDates[deliveryZone];
-
-    return res.status(200).json(dates);
-  } catch (err) {
-    // handle error in the future implementation
-    // for now simply return standard shipping cost
-    // let message = "Invalid postcode. " + err.message;
-    // return res.status(404).json({error: message});
-    return res.json(['2020-12-24', '2020-12-24']);
-  }
-});
-
 // Collect data from submit form and render checkout page
 router.post('/checkout', async (req, res) => {
-  const postcode = parseInt(req.body.postal_code);
+  const postcode = req.body.postcode;
   const deliveryDate = "2020-12-" + req.body.deliveryDay;
-  const weekendSurcharge = req.body.weekendSurcharge;
-  const areaSurcharge = req.body.areaSurcharge;
-  
-  const shippingOption = "weekdayStandard";
+  const weekendSurcharge = (req.body.weekendSurcharge === 'true');
+  const areaSurcharge = (req.body.areaSurcharge === 'true');
+
+  let shippingOption = "weekdayStandard";
   if (weekendSurcharge && areaSurcharge)
     shippingOption = "weekendWithSurcharge";
   else if (areaSurcharge)
@@ -56,19 +39,29 @@ router.post('/checkout', async (req, res) => {
   else if (weekendSurcharge)
     shippingOption = "weekendStandard";
 
-  req.session.shippingOption = products.getShippingCost(shippingOption);
+  req.session.shippingOption = shippingOption;
   req.session.deliveryDate = deliveryDate;
   req.session.postcode = postcode;
-  if (!req.body.add_ons) {
-    req.session.ids = [req.body.tree];
-  } else if (typeof req.body.add_ons === 'string' || req.body.add_ons instanceof String ) {
-    req.session.ids = [req.body.tree, req.body.add_ons];
-  } else
-    req.session.ids = [req.body.tree, ...req.body.add_ons];
 
-  res.render(`checkout`);
+  req.session.ids = [req.body.tree.toLowerCase()];
+  const addOns = req.body.addOns;
+  if (!(addOns === ''))
+    req.session.ids.push(...addOns.split(','));
+
+  res.sendFile(path.join(__dirname, '../../public', 'checkout.html'));
 });
 
+// get postcode
+
+router.get('/postcode', async (req, res) => {
+  return res.json(req.session.postcode); 
+});
+
+// get shipping cost
+router.get('/shipping-cost', (req, res) => {
+  const shippingCost = products.getShippingCost(req.session.shippingOption);
+  return res.json(shippingCost);
+});
 
 /**
  * Stripe integration to accept all types of payments with 3 POST endpoints.
@@ -95,38 +88,10 @@ const calculatePaymentAmount = async items => {
   return total;
 };
 
-// Get shipping option based on postcode
-router.get('/shippingOption/:postcode', async (req, res) => {
-  try {
-    let postcode = parseInt(req.params.postcode);
-    let shippingOption = postcodes[postcode].shippingOption;
-    let shippingCost = products.getShippingCost(shippingOption);
-    return res.status(200).json({
-      shippingOption, 
-      shippingCost,
-    });
-  } catch (err) {
-    // handle error in the future implementation
-    // for now simply return standard shipping cost
-    // let message = "Invalid postcode. " + err.message;
-    // return res.status(404).json({error: message});
-    return res.json({
-      shippingOption: "standard", 
-      shippingCost: 2500
-    });
-  }
-});
-
-// get shipping cost
-router.get('/shippingCost', (req, res) => {
-  const shippingCost = products.getShippingCost(req.session.shippingOption);
-  return res.json(shippingCost);
-});
-
 // Create the PaymentIntent on the backend.
 router.post('/payment_intents', async (req, res, next) => {
   let {currency, items} = req.body;
-  const amount = await calculatePaymentAmount(items);
+  let amount = await calculatePaymentAmount(items);
   amount += products.getShippingCost(req.session.shippingOption);
 
   // prepare metadata for paymentIntent 
@@ -159,6 +124,24 @@ router.post('/payment_intents/:id/shipping_change', async (req, res, next) => {
   amount += products.getShippingCost(shippingOption);
 
   try {
+    const paymentIntent = await stripe.paymentIntents.update(req.params.id, {
+      amount,
+    });
+    return res.status(200).json({paymentIntent});
+  } catch (err) {
+    return res.status(500).json({error: err.message});
+  }
+});
+
+
+// Update PaymentIntent with coupon discount.
+router.post('/payment_intents/:id/coupon', async (req, res, next) => {
+  const {items, coupon} = req.body;
+  let amount = await calculatePaymentAmount(items);
+
+  try {
+    amount *= (1 - (25 / 100));
+    amount += products.getShippingCost(req.session.shippingOption);
     const paymentIntent = await stripe.paymentIntents.update(req.params.id, {
       amount,
     });
