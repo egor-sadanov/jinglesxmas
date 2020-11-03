@@ -42,16 +42,28 @@ module.exports = {
       amount: 2500,
     },
     {
-      id: 'weekdayWithSurcharge',
+      id: 'weekdayRemote',
       label: 'CBD and remote suburbs',
       detail: 'Weekdays',
       amount: 2500,
     },
     {
-      id: 'weekendWithSurcharge',
+      id: 'weekendRemote',
       label: 'CBD and remote suburbs',
       detail: 'Weekends',
       amount: 5000,
+    },
+    {
+      id: 'weekdayCbd',
+      label: 'CBD and remote suburbs',
+      detail: 'Weekdays',
+      amount: 5000,
+    },
+    {
+      id: 'weekendCbd',
+      label: 'CBD and remote suburbs',
+      detail: 'Weekends',
+      amount: 7500,
     }
   ],
 

@@ -35,9 +35,7 @@ const getShippingCost = shippingOption => {
 // Get discount amount of coupon in percents
 const getDiscount = async coupon => {
   const discount = await stripe.coupons.retrieve(coupon);
-  console.log(coupon);
-
-  return discount.percent_off;
+  return discount.amount_off;
 }
 
 exports.products = {

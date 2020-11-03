@@ -15,35 +15,62 @@ const {products} = require('./inventory');
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-
+const passport = require('passport');
 const stripe = require('stripe')(config.stripe.secretKey);
 stripe.setApiVersion(config.stripe.apiVersion);
 
+require('./passport');
+const isAuthenticated = require('./auth');
+
+router.get('/account', isAuthenticated, (req, res) => {
+  res.send('Hello ' + req.user.displayName);
+});
+
+router.get('/auth/facebook', passport.authenticate('facebook', {scope:"email"}));
+router.get('/auth/facebook/callback', passport.authenticate('facebook', { 
+  successRedirect: '/account', failureRedirect: '/' 
+}));
+
+router.use('/auth/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
+// Render Terms and conditions.
+router.get('/terms', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../public', 'terms.html'));
+});
+
 // Render the main app HTML.
 router.get('/', (req, res) => {
-  res.render('index');
+  res.sendFile(path.join(__dirname, '../../public', 'index.html'));
 });
 
 // Collect data from submit form and render checkout page
 router.post('/checkout', async (req, res) => {
-  const postcode = req.body.postcode;
+  const area = req.body.area;
   const deliveryDate = "2020-12-" + req.body.deliveryDay;
-  const weekendSurcharge = (req.body.weekendSurcharge === 'true');
-  const areaSurcharge = (req.body.areaSurcharge === 'true');
+  const day = new Date(deliveryDate);
 
-  let shippingOption = "weekdayStandard";
-  if (weekendSurcharge && areaSurcharge)
-    shippingOption = "weekendWithSurcharge";
-  else if (areaSurcharge)
-    shippingOption = "weekdayWithSurcharge";
-  else if (weekendSurcharge)
-    shippingOption = "weekendStandard";
+  let shippingOption = "";
+
+  switch (area.toLowerCase()) {
+    case 'cbd': 
+      shippingOption = !(day.getDay() % 6) ? "weekendCbd":"weekdayCbd";
+      break;
+    case 'remote': 
+      shippingOption = !(day.getDay() % 6) ? "weekendRemote":"weekdayRemote";
+      break;
+    default: 
+      shippingOption = !(day.getDay() % 6) ? "weekendStandard":"weekdayStandard";
+      break;
+  }
 
   req.session.shippingOption = shippingOption;
   req.session.deliveryDate = deliveryDate;
-  req.session.postcode = postcode;
+  req.session.postcode = req.body.postcode;
 
-  req.session.ids = [req.body.tree.toLowerCase()];
+  req.session.ids = [req.body.tree];
   const addOns = req.body.addOns;
   if (!(addOns === ''))
     req.session.ids.push(...addOns.split(','));
@@ -140,7 +167,8 @@ router.post('/payment_intents/:id/coupon', async (req, res, next) => {
   let amount = await calculatePaymentAmount(items);
 
   try {
-    amount *= (1 - (25 / 100));
+    const discount = await products.getDiscount(coupon.toUpperCase());
+    amount -= discount;
     amount += products.getShippingCost(req.session.shippingOption);
     const paymentIntent = await stripe.paymentIntents.update(req.params.id, {
       amount,
