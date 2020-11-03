@@ -124,9 +124,11 @@ router.post('/payment_intents', async (req, res, next) => {
   // prepare metadata for paymentIntent 
   const metadata = {};
   let productName = "";
-  for (var i = 0; i < req.session.ids.length; i++) {
+  const productList = await products.list(req.session.ids);
+
+  for (var i = 0; i < productList.data.length; i++) {
     productName = "product_" + (i + 1);
-    metadata[productName] = req.session.ids[i]
+    metadata[productName] = productList.data[i].name;
   }
   metadata.deliveryDate = req.session.deliveryDate;
   
