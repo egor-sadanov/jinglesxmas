@@ -1,5 +1,5 @@
 import { css } from 'emotion'
-import { CTA } from '../../colorConsts'
+import { CTA, DARK_GREEN } from '../../colorConsts'
 
 export const postcode = css`
   border: 1px solid ${CTA};
@@ -25,6 +25,7 @@ export const label = css`
 `
 
 export const error = css`
+  color: ${DARK_GREEN};
   font-size: 0.9em;
   line-height: 1.6em;
   margin: 1em 0;

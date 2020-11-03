@@ -8,7 +8,7 @@ const Checkbox = ({
   name, 
   checked = false, 
   disabled = false,
-  onChange 
+  onChange,
 }) => { 
   return (
     <input 

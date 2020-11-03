@@ -53,11 +53,19 @@ export default class PostCodeInput extends React.Component {
             type="text" pattern="[0-9]{4}"
             maxLength={4} minLength={4}
             placeholder="3000"
-            name="title" value={value} 
+            name="postcode" value={value} 
             onChange={this.handleChange.bind(this)}
-            />
-          {areaSurcharge && <p className={styles.error}>Delivery area surcharge of $25 has been applied for selected postcode</p>}
-          {!valid && <p className={styles.error}>Please enter a valid Victorian postcode.</p>}
+          />
+          {areaSurcharge && (
+            <p className={styles.error}>
+              Delivery area surcharge of ${areaSurcharge} has been applied for selected postcode
+            </p>
+          )}
+          {!valid && (
+            <p className={styles.error}>
+              Please enter a valid Victorian postcode.
+            </p>
+          )}
           {isMissingPostcode && (
             <p className={styles.error}>
               {`Oops! It looks like ${value} is out of our delivery range, please call us on `}

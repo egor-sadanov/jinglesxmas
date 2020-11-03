@@ -231,6 +231,7 @@ class Store {
     return await response.json();
   }
   
+  // update order total label after successfull application of coupon
   async updateTotalLabelText(cost, currency) {
     const orderTotal = document.getElementById('order-total');
     const shippingCost = await this.getShippingCost();

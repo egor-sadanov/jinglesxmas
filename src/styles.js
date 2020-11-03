@@ -32,7 +32,7 @@ export const specialOffer = css`
   position: relative;
 
   span {
-    font-size: 0.8em;
+    font-size: 1em;
     line-height: 1.2em;
     color: ${YELLOW};
   }
@@ -61,6 +61,7 @@ export const specialOffer = css`
   @media (min-width: 500px) {
     width: 28em;
     padding: 0.5em 0.5em 0.5em 3em;
+    cursor: pointer;
   }
 
   @media (min-width: 768px) {
@@ -82,23 +83,25 @@ export const subTextRed = css`
   font-size: 0.9em;
 
   @media (min-width: 360px) {
-    margin: 0 auto 11em;
+    margin: 10em auto 1em;
   }
 
   @media (min-width: 400px) {
-    margin: 0 auto 12em;
+    margin: 12em auto 1em;
   }
 
   @media (min-width: 480px) {
+    margin: 0 auto 9em;
     font-size: 1.1em;
     width: 28em;
+    cursor: pointer;
   }
 
   @media (min-width: 768px) {
     width: 50vw;
     font-size: 1.7vw;
-    line-height: 2vw;
-    margin: 0 auto 26vw;
+    line-height: 2.2vw;
+    margin: 0 auto 22vw;
   }
 `
 
@@ -114,23 +117,22 @@ export const subTextGreen = css`
 `
 
 export const h1 = css`
-  color: ${RED};
-  font-size: 2.2em;
-  font-family: 'Fondamento', cursive;
-  margin: 2vw auto 0;
-  overflow: hiddlen;
-  white-space: nowrap;
+  margin: 3vw auto 1vw;
 
-  @media (min-width: 400px) {
-    font-size: 2.8em;
-  }
-
-  @media (min-width: 500px) {
-    font-size: 4em;
-  }
+  background-image: url("./images/jingles-logo.png"); 
+  background-repeat: no-repeat;
+  height: 95px;
+  width: 244px;
+  cursor: pointer;
 
   @media (min-width: 768px) {
-    font-size: 7vw;
+    background-image: url("./images/jingles-logo_big.png"); 
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 12vw;
+    width: 30vw;
+    max-height: 190px;
+    max-width: 486px;
   }
 `
 

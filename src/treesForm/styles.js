@@ -95,3 +95,14 @@ export const subTextGreen = css`
     font-size: 1em;
   }
 `
+
+export const surchargeMessage = css`
+  color: ${DARK_GREEN};
+  width: 100%;
+  margin: 1em auto;
+  font-size: 1em;
+
+  @media (min-width: 768px) {
+    font-size: 0.9em;
+  }
+`

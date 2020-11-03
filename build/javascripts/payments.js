@@ -901,7 +901,7 @@
     form.querySelector('input[name=postal_code]').value = postcode;
   }
 
-  // Update paymentIntent when the user prompts coupon
+  // Update paymentIntent's amount when the user prompts coupon
   const updatePaymentIntentWithCoupon = async (couponCode) => {
     const response =  await store.updatePaymentIntentWithCoupon(
       paymentIntent.id,
