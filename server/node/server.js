@@ -12,10 +12,10 @@ const config = require('./config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const path = require('path');
-const ngrok = config.ngrok.enabled ? require('ngrok') : null;
+// const ngrok = config.ngrok.enabled ? require('ngrok') : null;
 const app = express();
 
 let session = require('express-session');
@@ -33,7 +33,7 @@ app.use(
   })
 );
 app.use(cors());
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, '../../public')));
 app.engine('html', require('ejs').renderFile);
@@ -53,7 +53,7 @@ app.use('/', require('./routes'));
 
 app.use((req, res) => {
   res.status(404);
-  res.render('404');
+  res.send('The page was not found. 404');
 });
 
 // Start the server on the correct port.
@@ -63,23 +63,23 @@ const server = app.listen(config.port, () => {
 
 // Turn on the ngrok tunnel in development, which provides both the mandatory HTTPS
 // support for all card payments, and the ability to consume webhooks locally.
-if (ngrok) {
-  ngrok
-    .connect({
-      addr: config.ngrok.port,
-      subdomain: config.ngrok.subdomain,
-      authtoken: config.ngrok.authtoken
-      // region: 'au'
-    })
-    .then(url => {
-      console.log(`💳  App URL to see the demo in your browser: ${url}/`);
-    })
-    .catch(err => {
-      if (err.code === 'ECONNREFUSED') {
-        console.log(`⚠️  Connection refused at ${err.address}:${err.port}`);
-      } else {
-        console.log(`⚠️ Ngrok error: ${JSON.stringify(err)}`);
-      }
-      process.exit(1);
-    });
-}
+// if (ngrok) {
+//   ngrok
+//     .connect({
+//       addr: config.ngrok.port,
+//       subdomain: config.ngrok.subdomain,
+//       authtoken: config.ngrok.authtoken
+//       // region: 'au'
+//     })
+//     .then(url => {
+//       console.log(`💳  App URL to see the demo in your browser: ${url}/`);
+//     })
+//     .catch(err => {
+//       if (err.code === 'ECONNREFUSED') {
+//         console.log(`⚠️  Connection refused at ${err.address}:${err.port}`);
+//       } else {
+//         console.log(`⚠️ Ngrok error: ${JSON.stringify(err)}`);
+//       }
+//       process.exit(1);
+//     });
+// }
