@@ -48,29 +48,11 @@ router.get('/', (req, res) => {
 
 // Collect data from submit form and render checkout page
 router.post('/checkout', async (req, res) => {
-  const area = req.body.area;
-  const deliveryDate = "2020-12-" + req.body.deliveryDay;
-  const day = new Date(deliveryDate);
-
-  let shippingOption = "";
-
-  switch (area.toLowerCase()) {
-    case 'cbd': 
-      shippingOption = !(day.getDay() % 6) ? "weekendCbd":"weekdayCbd";
-      break;
-    case 'remote': 
-      shippingOption = !(day.getDay() % 6) ? "weekendRemote":"weekdayRemote";
-      break;
-    default: 
-      shippingOption = !(day.getDay() % 6) ? "weekendStandard":"weekdayStandard";
-      break;
-  }
-
-  req.session.shippingOption = shippingOption;
-  req.session.deliveryDate = deliveryDate;
+  req.session.deliveryDate = "2020-12-" + req.body.deliveryDay;
+  req.session.deliveryPrice = req.body.deliveryPrice * 100;
   req.session.postcode = req.body.postcode;
-
   req.session.ids = [req.body.tree];
+
   const addOns = req.body.addOns;
   if (!(addOns === ''))
     req.session.ids.push(...addOns.split(','));
@@ -86,8 +68,7 @@ router.get('/postcode', async (req, res) => {
 
 // get shipping cost
 router.get('/shipping-cost', async (req, res) => {
-  const shippingCost = products.getShippingCost(req.session.shippingOption);
-  return res.json(shippingCost);
+  return res.json(req.session.deliveryPrice);
 });
 
 /**
@@ -119,7 +100,7 @@ const calculatePaymentAmount = async items => {
 router.post('/payment_intents', async (req, res, next) => {
   let {currency, items} = req.body;
   let amount = await calculatePaymentAmount(items);
-  amount += products.getShippingCost(req.session.shippingOption);
+  amount += req.session.deliveryPrice;
 
   // prepare metadata for paymentIntent 
   const metadata = {};
@@ -150,7 +131,7 @@ router.post('/payment_intents', async (req, res, next) => {
 router.post('/payment_intents/:id/shipping_change', async (req, res, next) => {
   const {items, shippingOption} = req.body;
   let amount = await calculatePaymentAmount(items);
-  amount += products.getShippingCost(shippingOption);
+  amount += req.session.deliveryPrice;
 
   try {
     const paymentIntent = await stripe.paymentIntents.update(req.params.id, {
@@ -167,7 +148,7 @@ router.post('/payment_intents/:id/shipping_change', async (req, res, next) => {
 router.post('/payment_intents/:id/coupon', async (req, res, next) => {
   const {items, couponCode} = req.body;
   let amount = await calculatePaymentAmount(items);
-  amount += products.getShippingCost(req.session.shippingOption);
+  amount += req.session.deliveryPrice;
 
   // apply if user prompts valid coupone
   if (couponCode.toUpperCase() == ('JINGLES2020'))
