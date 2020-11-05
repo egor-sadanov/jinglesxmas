@@ -144,7 +144,7 @@ class Store {
   async updatePaymentIntentWithCoupon(
     paymentIntent,
     items,
-    coupon
+    couponCode
   ) {
     try {
       const response = await fetch(
@@ -153,7 +153,7 @@ class Store {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
-            coupon,
+            couponCode,
             items,
           }),
         }

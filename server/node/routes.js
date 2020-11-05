@@ -85,7 +85,7 @@ router.get('/postcode', async (req, res) => {
 });
 
 // get shipping cost
-router.get('/shipping-cost', (req, res) => {
+router.get('/shipping-cost', async (req, res) => {
   const shippingCost = products.getShippingCost(req.session.shippingOption);
   return res.json(shippingCost);
 });
@@ -165,13 +165,17 @@ router.post('/payment_intents/:id/shipping_change', async (req, res, next) => {
 
 // Update PaymentIntent with coupon discount.
 router.post('/payment_intents/:id/coupon', async (req, res, next) => {
-  const {items, coupon} = req.body;
+  const {items, couponCode} = req.body;
   let amount = await calculatePaymentAmount(items);
+  amount += products.getShippingCost(req.session.shippingOption);
+
+  // apply if user prompts valid coupone
+  if (couponCode.toUpperCase() == ('JINGLES2020'))
+    amount -= 2000;
+  else 
+    return res.json({error: "no such coupon"});
 
   try {
-    const discount = await products.getDiscount(coupon.toUpperCase());
-    amount -= discount;
-    amount += products.getShippingCost(req.session.shippingOption);
     const paymentIntent = await stripe.paymentIntents.update(req.params.id, {
       amount,
     });

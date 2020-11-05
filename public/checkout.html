@@ -125,12 +125,14 @@
             </label>
           </fieldset>
           <h2>Coupon</h2>
-          <fieldset>
+          <fieldset id="coupon">
             <label>
               <span>Coupon</span>
-              <input name="coupon" type="text" id="phone" class="field" placeholder="XXXX"></input>
+              <input name="coupon" type="text" class="field" placeholder="XXXX" value=""></input>
+              <button name="apply-coupon">Apply</button>
             </label>
           </fieldset>
+          <p id="coupon-handler"></p>
         </section>
         <button class="payment-button" type="submit">Pay</button> 
       </form>

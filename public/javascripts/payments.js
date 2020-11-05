@@ -255,10 +255,11 @@
 
   // Check if user has prompted coupon code.
   form
-    .querySelector('input[name=coupon]')
-    .addEventListener('change', (event) => {
+    .querySelector('button[name=apply-coupon]')
+    .addEventListener('click', (event) => {
       event.preventDefault();
-      updatePaymentIntentWithCoupon(event.target.value);
+      let coupon = form.querySelector('input[name=coupon]').value;
+      updatePaymentIntentWithCoupon(coupon);
     });
 
   // Submit handler for our payment form.
@@ -908,18 +909,32 @@
       store.getLineItems(),
       couponCode
     );
-    paymentRequest.update({
-      total: {
-        label: 'Total',
-        amount: response.paymentIntent.amount,
-      },
-    });
-    await store.updateTotalLabelText(response.paymentIntent.amount, config.currency);
-    const amount = store.formatPrice(
-      response.paymentIntent.amount,
-      config.currency
-    );
-    updateSubmitButtonPayText(`Pay ${amount}`);
+    const {error} = response;
+    if (error) {
+      console.log(error);
+      const couponHandler = document.getElementById('coupon-handler');
+      couponHandler.classList.add('visible');
+      couponHandler.innerHTML = `<p>Oops. Couldn't find such coupon :(</p>`;
+    } else {
+      paymentRequest.update({
+        total: {
+          label: 'Total',
+          amount: response.paymentIntent.amount,
+        },
+      });
+      await store.updateTotalLabelText(response.paymentIntent.amount, config.currency);
+      const amount = store.formatPrice(
+        response.paymentIntent.amount,
+        config.currency
+      );
+      updateSubmitButtonPayText(`Pay ${amount}`);
+      const couponLabel = document.getElementById('coupon');
+      const couponHandler = document.getElementById('coupon-handler');
+      couponLabel.classList.add('hidden');
+      couponHandler.classList.add('visible');
+      couponHandler.classList.add('applied');
+      couponHandler.innerHTML = `$20 deduction coupon has been successfully applied`;
+    }
   };
 
   // Listen to changes to the payment method selector.
