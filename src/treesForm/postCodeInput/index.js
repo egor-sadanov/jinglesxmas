@@ -1,4 +1,3 @@
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as styles from './styles'
@@ -16,31 +15,31 @@ export default class PostCodeInput extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-    handleChange = (event) => {
-      const number = Number(event.target.value)
-      const { onPostCodeChange } = this.props
-      if (isNaN(number)) {
-        return
-      } 
+  handleChange = (event) => {
+    const number = Number(event.target.value)
+    const { onPostCodeChange } = this.props
+    if (isNaN(number)) {
+      return
+    } 
 
-      const valid = (number/1000 | 0) === 3
+    const valid = (number/1000 | 0) === 3
 
-      let isMissingPostcode = false
-      const { postcodes } = this.props
-      const postCodeEnum = postcodes.find(c => c.code === number) 
-      if(valid) {
-        isMissingPostcode = !postCodeEnum
-      }
-      const areaSurcharge = postCodeEnum ? postCodeEnum.zone.areaSurcharge : false
-
-      onPostCodeChange(number, valid)
-      this.setState({ 
-        value: number,
-        valid,
-        isMissingPostcode,
-        areaSurcharge,
-      })
+    let isMissingPostcode = false
+    const { postcodes } = this.props
+    const postCodeEnum = postcodes.find(c => c.code === number) 
+    if(valid) {
+      isMissingPostcode = !postCodeEnum
     }
+    const areaSurcharge = postCodeEnum ? postCodeEnum.zone.areaSurcharge : false
+
+    onPostCodeChange(number, valid)
+    this.setState({ 
+      value: number,
+      valid,
+      isMissingPostcode,
+      areaSurcharge,
+    })
+  }
   
     render() {
       const { valid, value, isMissingPostcode, areaSurcharge } = this.state
@@ -58,7 +57,7 @@ export default class PostCodeInput extends React.Component {
           />
           {areaSurcharge && (
             <p className={styles.error}>
-              Delivery area surcharge of ${areaSurcharge} has been applied for selected postcode
+              Delivery area surcharge of ${areaSurcharge} has been applied for selected postcode.
             </p>
           )}
           {!valid && (
@@ -73,12 +72,11 @@ export default class PostCodeInput extends React.Component {
               {` for delivery quote to your area.`}
           </p>
           )}
-
-          </>
-      );
+        </>
+      )
     }
   }
-  
+
   PostCodeInput.propTypes = {
     onPostCodeChange: PropTypes.func.isRequired,
   }

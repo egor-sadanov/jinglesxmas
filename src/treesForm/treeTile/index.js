@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import * as trees from '../trees'
 import * as styles from './styles'
 
-export const TreeTile = ({ tree = {}, selectTree }) => {
+export const TreeTile = ({ tree = {}, selectTree, discount }) => {
 
   const {
     name,
@@ -19,15 +19,17 @@ export const TreeTile = ({ tree = {}, selectTree }) => {
     [styles.bigTree]: name === trees.LARGE_TREE_NAME,
   })
 
+  const displayPrice = price - ((discount && discount.value) || 0) 
+
   return (
     <>
       <div className={tilesClasses} 
-          onClick={() => {selectTree(tree)}}
+          onClick={() => { selectTree(tree) }}
       >
         <label className={styles.title}>{name}</label>
-        <div>{height}</div>
+        <div className={styles.treeHeight} >{height}</div>
         <hr className={styles.hr}/>
-        <div>{`$${price}`}</div>
+        <div className={styles.price} >{`$${displayPrice}`}</div>
       </div>
     </>
   )
@@ -40,4 +42,7 @@ TreeTile.propTypes = {
     name: PropTypes.string,
   }),
   selectTree: PropTypes.func,
+  discount: PropTypes.shape({
+    value: PropTypes.number,
+  }),
 }

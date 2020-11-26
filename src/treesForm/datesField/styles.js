@@ -23,6 +23,9 @@ export const datesSelect = css`
 
 export const calendar = css`
   
+  * {
+    font-size: 16px;
+  }
     td.CalendarDay__selected, 
     td.CalendarDay__selected:active, 
     td.CalendarDay__selected:hover {
@@ -36,8 +39,9 @@ export const calendar = css`
 
     label {
         color: ${CTA};
+        font-family: 'IM Fell DW Pica SC', serif;
         margin: .6em auto;
-        font-size: 1.2em;
+        font-size: 1.4em;
     }
 
     margin: 1em auto 0;

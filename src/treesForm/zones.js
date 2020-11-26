@@ -1,8 +1,10 @@
+import moment from 'moment'
 import * as postcodes_json from './zones.json'
+import * as dates_json from './availableDates.json'
 
-export const WEEKEND_SURCHARGE = 25
-export const REMOTE_AREA_SURCHARGE = 25
-export const CBD_SURCHARGE = 50
+export const WEEKEND_SURCHARGE = 15
+export const REMOTE_AREA_SURCHARGE = 15
+export const CBD_SURCHARGE = 40
 
 /*
 CITY	Thursday	3,5,6,10,12,13,17,19,20
@@ -16,61 +18,75 @@ export const ZONES = {
     C2 : {
         name: 'C2',
         areaSurcharge: CBD_SURCHARGE,
-        availableDates: [3,5,6,10,12,13,17,19,20],
+        availableDates: [],
     },
     SE : {
-        name: 'E',
+        name: 'SE',
         areaSurcharge: false,
-        availableDates: [5,6,7,8,12,13,14,15,19,20],
+        availableDates: [],
     },
     SE1 : {
-        name: 'E1',
+        name: 'SE1',
         areaSurcharge: REMOTE_AREA_SURCHARGE,
-        availableDates: [5,6,7,8,12,13,14,15,19,20],
+        availableDates: [],
     },
     N : {
         name: 'N',
         areaSurcharge: false,
-        availableDates: [2,5,6,9,12,13,16,19,20],
+        availableDates: [],
     },
     N1 : {
         name: 'N1',
         areaSurcharge: REMOTE_AREA_SURCHARGE,
-        availableDates: [2,5,6,9,12,13,16,19,20],
+        availableDates: [],
     },
     WN : {
-        name: 'N',
+        name: 'WN',
         areaSurcharge: false,
-        availableDates: [2,3,5,6,8,9,12,13,16,17,19,20],
+        availableDates: [],
     },
     WN1 : {
         name: 'WN1',
         areaSurcharge: REMOTE_AREA_SURCHARGE,
-        availableDates: [2,3,5,6,8,9,12,13,16,17,19,20],
+        availableDates: [],
     },
     S : {
         name: 'S',
         areaSurcharge: false,
-        availableDates: [4,5,6,7,8,11,12,13,14,15,18,19,20],
+        availableDates: [],
     },
     S1 : {
         name: 'S1',
         areaSurcharge: REMOTE_AREA_SURCHARGE,
-        availableDates: [4,5,6,7,8,11,12,13,14,15,18,19,20],
+        availableDates: [],
     },
     W : {
         name: 'W',
         areaSurcharge: false,
-        availableDates: [3,5,6,10,12,13,17,19,20],
+        availableDates: [],
     },
     W1 : {
         name: 'W1',
         areaSurcharge: REMOTE_AREA_SURCHARGE,
-        availableDates: [3,5,6,10,12,13,17,19,20],
+        availableDates: [],
     },
 }
 
-
+/**
+ * Checks todays date. 
+ * If it's December, returns a new array with only days after today.
+ * Else returns the initial array without modifying.
+ */
+const getFutureDays = (availableDates) => {
+    const todayMonth = moment().month()
+    //dec=11
+    if (todayMonth !== 11) { 
+        return availableDates
+    }
+    const todayDay = moment().date()
+    const futureAvailableDates = availableDates.filter(d => d > todayDay)
+    return futureAvailableDates
+}
 /**
  * reads postcodes from a Json file.
  * returns an array of postcodes, each element is in form
@@ -83,12 +99,22 @@ export const fetchPostCodesFromJson = () => {
     if (!postcodes_json) {
         return
     }
-    const postcodes = postcodes_json.default.map((p) => {
+    // "zone": "C",
+    // "availableDates": [3,5,6,10,12,13,17,19,20]
+    if (dates_json) {
+        const datesJson = dates_json.default
+        for (let zone in ZONES) {
+            const dates = datesJson.find(d => ZONES[zone].name.startsWith(d.zone))
+            ZONES[zone].availableDates = dates ? getFutureDays(dates.availableDates) : []
+        }
+    }
+    
+    console.dir(ZONES)
+    const postcodes = postcodes_json.default.map(p => {
         return {
             code: p.postcode,
             zone: ZONES[`${p.zone}${!!p.surcharge ? p.surcharge : ''}`]
         }
     })
-    console.dir(postcodes)
     return postcodes
 }

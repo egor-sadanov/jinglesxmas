@@ -4,45 +4,47 @@ import { CTA, DARK_GREEN } from '../../colorConsts'
 export const postcode = css`
   border: 1px solid ${CTA};
   
-  line-height: 1.3em;
-  padding: .6em 1.4em .5em .8em;
-  width: 8em;
+  font-size: 1.2em;
+  line-height: 1.2em;
+  padding: .4em 1.2em .3em .6em;
+  width: 7em;
   max-width: 80%;
   box-sizing: border-box;
-  margin: 1em auto 0;
+  margin: .8em auto 0;
   border-radius: 6px;
 
 `
 
 export const label = css`
   color: ${CTA};
+  font-family: 'IM Fell DW Pica SC', serif !important;
   box-sizing: border-box;
-  margin: 1em;
+  margin: .8em 0.4em 0;
   width: 6em;
-  font-size: 1.2em;
+  font-size: 1.4em;
   line-height: 2em;
 
 `
 
 export const error = css`
   color: ${DARK_GREEN};
-  font-size: 0.9em;
-  line-height: 1.6em;
+  font-size: 16px;
+  line-height: 18px;
   margin: 1em 0;
 
+  @media (min-width: 400px) {
+    font-size: 20px;
+    line-height: 22px;
+  }
+  
   @media (min-width: 768px) {
-    font-size: 0.9em;
+    font-size: 1.1em;
+    line-height: 1.2em;
     margin: .5em 0;
   }
 
-  a {
-    font-size: 0.9em;
-    line-height: 1.6em;
-    font-weight: 600;
-
-    @media (min-width: 768px) {
-      font-weight: 500;
-    }
+  * {
+    font-size: 1em;
   }
 `
 

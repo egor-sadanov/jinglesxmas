@@ -3,8 +3,13 @@ import TreeTile from './treeTile'
 import Checkbox from './checkbox'
 import DatesField from './datesField'
 import PostCodeInput from './postCodeInput'
+import CouponInput from './couponInput'
 import { TREES, LARGE_TREE_NAME } from './trees'
-import { ADDITIONAL_ITEMS, STAND_KEY } from './additionalItems'
+import { 
+  ADDITIONAL_ITEMS, 
+  STAND_KEY, 
+  INSTALLATION_KEY,
+} from './additionalItems'
 import {  
   WEEKEND_SURCHARGE, 
   REMOTE_AREA_SURCHARGE, 
@@ -34,6 +39,7 @@ class TreesForm extends React.Component {
       postCode: null,
       deliveryDate: null,
       isFormValid: true,
+      discount: {},
       formErrorMessage: "Please enter a valid PostCode and select a delivery date",
     }
 
@@ -42,6 +48,7 @@ class TreesForm extends React.Component {
     this.onSubmit = this.onSubmit.bind(this)
     this.onDeliveryDateChange = this.onDeliveryDateChange.bind(this)
     this.onPostCodeChange = this.onPostCodeChange.bind(this)
+    this.onCouponChange = this.onCouponChange.bind(this)
     this.isFormValid = this.isFormValid.bind(this)
   }
 
@@ -54,7 +61,7 @@ class TreesForm extends React.Component {
         ...state, 
         trees: trees, 
         selectedTree : tree,
-        total: this.getTotal({tree:tree}) 
+        total: this.getTotal({ tree }) 
       }
     })
   }
@@ -64,16 +71,18 @@ class TreesForm extends React.Component {
     checkedItems = [...this.state.checkedItemsSet],
     dateSurcharge = this.state.dateSurcharge,
     areaSurcharge = this.state.areaSurcharge,
+    discount = this.state.discount,
   }) {
     const additinalItemsPrice = checkedItems.reduce((sum, item) => { 
-        if (this.isAddedItemLargeStand(item)) {
+        if (this.isAddedItemLargeStand(item, tree)) {
           return sum + item.large.price 
         }
         return sum + item.price 
       }, 0
     )
+    const treePrice = tree.price - ((discount && discount.value) || 0)
 
-    return tree.price + additinalItemsPrice + dateSurcharge + areaSurcharge
+    return treePrice + additinalItemsPrice + dateSurcharge + areaSurcharge
   }
 
   onDeliveryDateChange(deliveryDate) { 
@@ -90,9 +99,13 @@ class TreesForm extends React.Component {
   }
 
   onPostCodeChange(postCode, valid) { 
-    const { deliveryDate, postcodes, postCode: prevPostCode } = this.state
+    const { 
+      deliveryDate, 
+      postcodes, 
+      dateSurcharge,
+     } = this.state
 
-    if (!valid && prevPostCode) { 
+    if (!valid) { 
       this.setState((state) => ({ 
         ...state,
         postCode: null,
@@ -106,13 +119,12 @@ class TreesForm extends React.Component {
     const areaSurcharge = postCodeEnum ? postCodeEnum.zone.areaSurcharge : false
 
     let newDeliveryDate = deliveryDate
+    let newDateSurcharge = dateSurcharge
+
     // if deliveryDate is selected, but not in avaiable dates, set to null
     if (deliveryDate && !availableDates.find(d => d === deliveryDate.date())){
       newDeliveryDate = null
-    }
-
-    if (!postCodeEnum) {
-      
+      newDateSurcharge = null
     }
 
     this.setState((state) => ({ 
@@ -122,12 +134,21 @@ class TreesForm extends React.Component {
       availableDates,
       isFormValid: this.isFormValid({ deliveryDate: newDeliveryDate, postCode }),
       deliveryDate: newDeliveryDate,
-      total: this.getTotal({ areaSurcharge }),
+      dateSurcharge: newDateSurcharge,
+      total: this.getTotal({ areaSurcharge, dateSurcharge }),
+    }))
+  }
+
+  onCouponChange(discount) {
+    this.setState((state) => ({ 
+      ...state,
+      discount, 
+      total: this.getTotal({ discount: discount || {} }),
     }))
   }
 
   onAdditionalItemsChange(e) {
-    const { checkedItemsSet, disabledItemsSet } = this.state
+    const { checkedItemsSet, isShowInstallationMessage } = this.state
     const { name : itemKey, checked: isChecked } = e.target
 
     const item = ADDITIONAL_ITEMS.find(i => i.key === itemKey)
@@ -137,20 +158,43 @@ class TreesForm extends React.Component {
     } else {
       checkedItemsSet.add(item)
     }
-    this.updateInstallation(isChecked, itemKey, checkedItemsSet, disabledItemsSet)
+    // this.updateInstallation(isChecked, itemKey, checkedItemsSet, disabledItemsSet)
+
+    const isShowInstallMessage = this.checkInstallation(isChecked, itemKey, checkedItemsSet)
 
     this.setState((state) => ({ 
       ...state,
       checkedItemsSet,
+      isShowInstallationMessage: isShowInstallMessage === null ? isShowInstallationMessage: isShowInstallMessage,
       total: this.getTotal({checkedItems:  [...checkedItemsSet]}),
     }));
+  }
+
+  checkInstallation(isChecked, itemKey, checkedItemsSet) {
+    // debugger
+    if (itemKey === INSTALLATION_KEY && !isChecked) {
+      return false
+    }
+    if (itemKey === STAND_KEY && isChecked) {
+      return false
+    }
+    if (itemKey === INSTALLATION_KEY && isChecked) {
+      const stand = [...checkedItemsSet].find(i => i.key === STAND_KEY)
+      return !stand
+    } 
+    if (itemKey === STAND_KEY && !isChecked) {
+      const installation = [...checkedItemsSet].find(i => i.key === INSTALLATION_KEY)
+      return !!installation
+    }
+    return null
   }
 
   updateInstallation(isChecked, itemKey, checkedItemsSet, disabledItemsSet) {
     if (!itemKey.includes(STAND_KEY)) { 
       return
     }
-    const installation = ADDITIONAL_ITEMS.find(i => i.key === 'installation')
+    const installation = ADDITIONAL_ITEMS.find(i => i.key === INSTALLATION_KEY)
+
     if (isChecked) {
       disabledItemsSet.delete(installation)
     } else {
@@ -170,8 +214,7 @@ class TreesForm extends React.Component {
     return !!postCode && !!deliveryDate
   }
 
-  isAddedItemLargeStand(item) {
-    const { selectedTree } = this.state
+  isAddedItemLargeStand(item, selectedTree) {
     return item.key === STAND_KEY && selectedTree.name === LARGE_TREE_NAME
   }
 
@@ -183,9 +226,25 @@ class TreesForm extends React.Component {
     return date ? ('0' + date.date()).slice(-2) : ''
   }
 
+  formatDeliveryPrice(areaSurcharge = 0, dateSurcharge = 0) {
+    return areaSurcharge + dateSurcharge
+  }
+
+  formatZone(postCode) {
+    const { postcodes } = this.state
+    const postCodeEnum = postcodes.find(c => c.code === postCode)
+    const zone = postCodeEnum ? postCodeEnum.zone.name : null
+    return zone
+  }
+
+  formatTree(tree, discount) {
+    return (discount && discount.value) ? discount.productKeys[tree.name] : tree.key
+  }
+
   formatAdditionalItemsNames(checkedItemsSet) {
+    const { selectedTree } = this.state
     const additionalItemsNames = [...checkedItemsSet].map(i => {
-      if (this.isAddedItemLargeStand(i)){
+      if (this.isAddedItemLargeStand(i, selectedTree)){
         return i.large.name
       }
       return i.name
@@ -201,7 +260,7 @@ class TreesForm extends React.Component {
     if(areaSurcharge === CBD_SURCHARGE) {
       return 'CBD'
     }
-    return ''
+    return 'Normal'
   }
 
   onSubmit(e) {
@@ -214,12 +273,15 @@ class TreesForm extends React.Component {
       return 
     }
 
-    console.log(e.target.tree.value)
-    console.log(e.target.addOns.value)
-    console.log(e.target.postcode.value)
-    console.log(e.target.deliveryDay.value)
-    console.log(e.target.area.value)
-    console.log(e.target.total.value)
+    console.log('tree', e.target.tree.value)
+    console.log('addOns', e.target.addOns.value)
+    console.log('postcode', e.target.postcode.value)
+    console.log('zone', e.target.zone.value)
+    console.log('deliveryDay', e.target.deliveryDay.value)
+    console.log('area', e.target.area.value)
+    console.log('deliveryPrice', e.target.deliveryPrice.value)
+    console.log('total', e.target.total.value)
+    debugger
   }
 
   render() {
@@ -236,17 +298,26 @@ class TreesForm extends React.Component {
       selectedTree,
       areaSurcharge,
       dateSurcharge,
+      discount,
+      postCode,
+      isShowInstallationMessage,
     } = this.state
 
     const treesList = trees.map(tree => (
-      <TreeTile tree={tree} key={tree.name} selectTree={this.selectTree}/>
+      <TreeTile 
+        tree={tree} 
+        key={tree.name} 
+        selectTree={this.selectTree}
+        discount={discount}
+      />
     ))
 
     const checkboxes = ADDITIONAL_ITEMS.map(item => {
       let labelText = this.getLabelText( 
-        this.isAddedItemLargeStand(item) ? item.large : item
+        this.isAddedItemLargeStand(item, selectedTree) ? item.large : item
       )
 
+      const isShowMessage = item.key === INSTALLATION_KEY && isShowInstallationMessage
       return (
         <div key={item.key}>
           <label className={styles.checkboxLabel}>
@@ -258,6 +329,11 @@ class TreesForm extends React.Component {
             />
             {labelText}
           </label>
+          {isShowMessage && (
+            <p className={styles.installationMessage}>
+              {'Please note we only install into stands that have been supplied by us.'}
+            </p>
+          )}
         </div>
     )})
 
@@ -269,10 +345,12 @@ class TreesForm extends React.Component {
         action="/checkout" 
         onSubmit={this.onSubmit}
       >
-        <input name="tree" value={selectedTree.key} type="hidden"/>
+        <input name="tree" value={this.formatTree(selectedTree, discount)} type="hidden"/>
         <input name="addOns" value={this.formatAdditionalItemsNames(checkedItemsSet)} type="hidden"/>
         <input name="deliveryDay" value={this.formatDate(deliveryDate)} type="hidden"/>
         <input name="area" value={this.formatArea(areaSurcharge)} type="hidden"/>
+        <input name="zone" value={this.formatZone(postCode)} type="hidden"/>
+        <input name="deliveryPrice" value={this.formatDeliveryPrice(areaSurcharge, dateSurcharge)} type="hidden"/>
         <input name="total" value={total || 0} type="hidden"/>
 
         <h2 className={styles.h2}>Order now</h2>
@@ -297,9 +375,12 @@ class TreesForm extends React.Component {
         />
         {!!dateSurcharge && (
           <p className={styles.surchargeMessage}>
-            {`Weekend surcharge of $${dateSurcharge} has been applied`}
+            {`Weekend surcharge of $${dateSurcharge} has been applied.`}
           </p>
         )}
+        <CouponInput 
+          onCouponChange={this.onCouponChange}
+        />
         <hr className={styles.hr}/>
         <button 
           type="submit"
@@ -308,7 +389,9 @@ class TreesForm extends React.Component {
         >
             {`Buy for $${total}`}
         </button>
-        <p>{!isFormValid && formErrorMessage}</p>
+        {!isFormValid && (
+          <p className={styles.surchargeMessage}>{formErrorMessage}</p>
+        )}
       </form>
     )
   }

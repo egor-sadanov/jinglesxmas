@@ -1,4 +1,5 @@
 export const STAND_KEY = 'cincostand'
+export const INSTALLATION_KEY = 'installation'
 
 // prod_IJw75RnppIFZpM	Tree Installtion
 // prod_IJj83NN3LTVrfV	Tree Preservative
@@ -9,7 +10,7 @@ export const STAND_KEY = 'cincostand'
 
 export const ADDITIONAL_ITEMS = [{
         name: 'prod_IJj7tjbVfgty7J',
-        key: 'cincostand',
+        key: STAND_KEY,
         label: 'Cinco Stand',
         price: 45,
         large: {
@@ -21,7 +22,7 @@ export const ADDITIONAL_ITEMS = [{
       },
       {
         name: 'prod_IJw75RnppIFZpM',
-        key: 'installation',
+        key: INSTALLATION_KEY,
         label: 'Installation',
         price: 20,
       },
