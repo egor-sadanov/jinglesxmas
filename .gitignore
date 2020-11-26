@@ -116,3 +116,8 @@ dist
 .pnp.*
 
 package-lock.json
+
+# remove unnecessary for production files
+src/
+public_origa/
+.DS_Store
